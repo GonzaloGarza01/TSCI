@@ -1,0 +1,86 @@
+.login-form {
+    padding: 5% 10%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.form-input {
+    width: 100%;
+    border: 1px;
+    border-radius: 50px;
+    text-transform: initial;
+    box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+}
+.action-button {
+    text-align: center;
+    padding: 0;
+    .login-button {
+      text-align: center;
+      margin-top: 1rem;
+      width: 80%;
+      font-size: 0.9rem;
+    }
+    p {
+      margin-top: 5px;
+      font-size: 1rem;
+      padding-bottom: 10px;
+    }
+    .signup-button {
+      --border-color: #b4b4b4;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      width: 80%;
+    }
+    .forgotPass-button {
+        font-size: 0.75rem;
+        margin-top: 10px;
+        width: parent;
+      }
+}
+.header {
+    padding-top: 5%;
+    h1 {
+      text-align: center;
+      font-family:Lucida Bright;
+      color: white;
+      font-size: 40px;
+    }
+}
+.title{
+    background-color: #324739;
+    margin: 5%;
+    height: 70px;
+    h1{
+        padding-top: 5px;
+        text-align: center;
+        font-size: 50px;
+        font-family: Courier;
+    }
+}
+.square{
+    background-color: white;
+    border-radius: 5%;
+    margin: 5%;
+    padding:7%
+}
+.selector{
+    width: 40%;
+}
+ion-item {
+    --ion-background-color: white;
+    border-radius: 50px;
+}  
+ion-icon {
+    padding-right: 0.6rem;
+    color: #50C878;
+}
+ion-label {
+    margin-left: 15px;
+    font-size: 1rem;
+    top: 4px;
+    background: none;
+}
+ion-content{
+    color: #50C878;
+}
