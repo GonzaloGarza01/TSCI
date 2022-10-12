@@ -25,7 +25,7 @@
           <div class="form-input">
             <ion-item>
               <ion-label position="floating" color="medium"><ion-icon name="mail-outline"></ion-icon>Correo</ion-label>
-              <ion-input type="text"> </ion-input>
+              <ion-input type="text" [(ngModel)]="user.email" #email required class="register_input"> </ion-input>
             </ion-item>
           </div>
   
@@ -33,14 +33,14 @@
         <div class="form-input">
           <ion-item>
             <ion-label position="floating" color="medium"><ion-icon name="lock-closed-outline"></ion-icon>Contraseña</ion-label>
-            <ion-input type="password"> </ion-input>
+            <ion-input type="password" [(ngModel)]="user.password"  #password required class="register_input" type="password"> </ion-input>
           </ion-item>
         </div>
       </div>
   
       <!-- BOTONES -->
       <div class="action-button ion-padding">
-        <ion-button [routerLink]="['/tabs/alumnos']" type="submit" size="large" class="login-button" color="secondary">Iniciar sesion</ion-button>
+        <ion-button type="submit" size="large" class="login-button" (click)="onLogin()" color="primary">Iniciar sesion</ion-button>
         <ion-button class="forgotPass-button" fill="" size="large">¿Olvidaste tu contraseña?</ion-button>
         <ion-button  [routerLink]="['/register']" class="signup-button" size="large" color="tertiary">Registrarse</ion-button>
       </div>
