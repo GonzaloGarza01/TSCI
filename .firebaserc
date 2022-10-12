@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tsci-aprende": {
+      "hosting": {
+        "app": [
+          "tsci-aprende"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tsci-aprende"
+  }
+}
