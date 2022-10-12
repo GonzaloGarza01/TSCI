@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +10,29 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(
+    private authSvc:AuthService,
+    private toastController: ToastController,
+    private router: Router,
+  ) {}
 
+  logOut(){
+    this.authSvc.logout();
+    this.presentToast("Cerrando sesión...");
+    this.redirectUser();
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1000
+    });
+    toast.present();
+  }
+
+  redirectUser(){
+    this.router.navigate(['register']);
+  }
+
+  
 }
