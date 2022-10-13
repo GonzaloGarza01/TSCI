@@ -7,6 +7,9 @@
 </ion-header>
 
 <ion-content>
+  <h3 *ngIf="dataUser.email" class="ion-text">{{dataUser.nombre}}</h3>
+  <h5 *ngIf="dataUser.nombre" class="ion-text">{{dataUser.email}}</h5>
+  <h5 *ngIf="dataUser.nombre" class="ion-text">{{dataUser.rol}}</h5>
   <ion-button (click)="logOut()">Cerrar sesión</ion-button>
 </ion-content>
 

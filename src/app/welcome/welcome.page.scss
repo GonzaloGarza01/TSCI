@@ -1,0 +1,180 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
+  ion-header {
+    background: url("https://cdn.discordapp.com/attachments/522699340771360773/1029882527713857597/unknown.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  
+    .info {
+        width: 100%;
+  
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+  
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+
+        .info_content {
+          margin: 0;
+          max-width: 55rem;
+          text-align: center;
+          color: white;
+          font-size: 2rem;
+          font-weight: lighter;
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+        ion-button {
+          width: 13rem;
+          --background: rgb(255, 255, 255);
+  
+          --color: rgb(31, 22, 22);
+          font-weight: bold;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 3rem;
+        }
+      }
+    .header-welcome {
+      backdrop-filter: brightness(0.3);
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      .bar-navigation {
+        margin-top: 1.5rem;
+        margin-left: 5rem;
+        margin-right: 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        ion-img {
+          --color: white;
+          width: 2rem;
+          max-width: fit-content;
+        }
+        .btns {
+          margin-right: 5rem;
+          display:flex;
+          gap: 20px;
+          a {
+            color: white;
+            cursor: pointer;
+           
+           
+          }
+  
+          .go_login_btn {
+            
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+        
+            font-size: 1rem;
+            margin-top: 10px;
+            
+           
+          }
+        
+          .go_login_btn:after {
+            background: none repeat scroll 0 0 transparent;
+            
+            content: "";
+            display: flex;
+            flex-direction: row;
+            height: 2px;
+            left: 50%;
+            background: rgb(158, 118, 118);
+            transition: width 0.3s ease 0s, left 0.3s ease 0s;
+            width: 0;
+          }
+        
+          .go_login_btn:hover:after {
+            width: 100%;
+            left: 0;
+          }
+  
+        }
+      }
+    ion-button {
+        width: 13rem;
+        --background: rgb(255, 255, 255);
+
+        --color: rgb(31, 22, 22);
+        font-weight: bold;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3rem;
+    }
+      
+  
+  .footer_cont {
+    color: black;
+    font-size: 10px;
+    text-align: center;
+  }
+  
+    ion-img {
+      width: 35rem;
+      min-width: 30rem;
+    }
+  }
+}
+  
+  
+  // -------------------- Movil Resolution ----------------------//
+  
+  @media screen and (max-width: 800px) {
+    .hide{
+    display: none;
+    }
+  
+    ion-header {
+      .header-welcome {
+  
+        .bar-navigation {
+          margin-left: 2rem;
+          .btns {
+            margin-right: 1rem;
+          }
+        }
+        .info {
+          .info_content {
+            max-width: 23rem;
+            font-size: 1.3rem;
+          }
+        }
+      }
+    }
+
+    ion-img {
+    width: 35rem;
+    min-width: 30rem;
+    }
+    
+  
+    .footer_cont {
+  
+      text-align: center;
+      ion-title{
+        padding: 0;
+        font-size: 1rem;
+        font-weight: lighter;
+      }
+    }
+  }
+   
+.body_content{
+    color: white;
+}
