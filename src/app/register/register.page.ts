@@ -34,7 +34,8 @@ export class RegisterPage implements OnInit {
               const db = getDatabase();
               set(ref(db, 'users/' + user.uid), {
                 nombre: this.user.name,
-                email: this.user.email
+                email: this.user.email,
+                rol: 'tutor'
               })
               .then(()=>{
                 this.presentToast('Usuario registrado, favor de confirmar desde su correo');
