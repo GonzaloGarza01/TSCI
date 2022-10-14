@@ -10,7 +10,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginPage implements OnInit {
   user: any={ };
-
+  // currentRole = 'tutor';
+  // tutorView: boolean = true;
+  // maestroView: boolean;
   constructor(
     private authSvc:AuthService,
     private router: Router,
@@ -19,6 +21,19 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
   }
+
+  // handleChange(ev: Event) {
+  //   this.currentRole = (ev as CustomEvent).detail.value;
+  //   console.log(this.currentRole);
+  //   if(this.currentRole === 'tutor'){
+  //     this.tutorView = true;
+  //     this.maestroView = false;
+  //   }
+  //   if(this.currentRole === 'maestro'){
+  //     this.tutorView = false;
+  //     this.maestroView = true;
+  //   }
+  // }
 
   async onLogin(){
     try {
@@ -42,7 +57,7 @@ export class LoginPage implements OnInit {
   private redirectUser(isVerified: boolean){
     if(isVerified){
        this.presentToast('Bienvenido a Aprende+');
-        this.router.navigate(['tabs/alumnos']);
+        this.router.navigate(['tabs/asignaciones']);
     } else{
        this.presentToast('Revisa tu email para verificar la cuenta');
     }

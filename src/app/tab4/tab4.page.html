@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Asignaciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="class-btn">
+    <ion-item id="section-tareas" class="selected" (click)="tareasSection()">Pendientes</ion-item>
+    <ion-item id="section-calificaciones"  (click)="calificacionesSection()">Calificaciones</ion-item>
+  </div>
+
+  <div class="container selected-container" id="tareas-container">
+    <ion-grid>
+      <ion-row >
+        <h1>Aquí aparecerán las tareas asignadas</h1>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="container" id="calif-container">
+    <ion-grid>
+      <ion-row>
+        <h1>Aquí aparecaran las calificaciones</h1>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ion-button *ngIf="maestroView" class="buttonAddSession">+</ion-button>
+</ion-content>
