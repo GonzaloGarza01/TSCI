@@ -4,6 +4,9 @@ import { ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { child, get, getDatabase, onValue, ref,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
+import { ModalAboutComponent } from '../components/modal-about/modal-about.component';
+import { ModalController } from '@ionic/angular';
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -16,6 +19,7 @@ export class Tab3Page implements OnInit {
     private authSvc:AuthService,
     private toastController: ToastController,
     private router: Router,
+    private modalCtrl: ModalController
   ) {}
 
 
@@ -23,6 +27,15 @@ export class Tab3Page implements OnInit {
     const auth = getAuth();
     this.uid = auth.currentUser.uid;
     this.getUserInfo();
+  }
+  
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalAboutComponent,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
   }
 
   logOut(){
