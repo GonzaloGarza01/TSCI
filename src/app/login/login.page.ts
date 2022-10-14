@@ -57,7 +57,7 @@ export class LoginPage implements OnInit {
   private redirectUser(isVerified: boolean){
     if(isVerified){
        this.presentToast('Bienvenido a Aprende+');
-        this.router.navigate(['tabs/alumnos']);
+        this.router.navigate(['tabs/asignaciones']);
     } else{
        this.presentToast('Revisa tu email para verificar la cuenta');
     }

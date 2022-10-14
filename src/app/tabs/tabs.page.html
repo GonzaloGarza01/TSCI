@@ -1,6 +1,30 @@
 <ion-tabs>
+  <ion-tab-bar slot="bottom" *ngIf="tutorView">
 
-  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="asignaciones">
+      <ion-icon name="briefcase-outline"></ion-icon>
+      <ion-label>Asignaciones</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="avisos">
+      <ion-icon name="megaphone-outline"></ion-icon>
+      <ion-label>Avisos</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="configuracion">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>Configuración</ion-label>
+    </ion-tab-button>
+    
+  </ion-tab-bar>
+
+  <ion-tab-bar slot="bottom" *ngIf="maestroView">
+
+    <ion-tab-button tab="asignaciones">
+      <ion-icon name="briefcase-outline"></ion-icon>
+      <ion-label>Asignaciones</ion-label>
+    </ion-tab-button>
+    
     <ion-tab-button tab="alumnos">
       <ion-icon name="people-outline"></ion-icon>
       <ion-label>Alumnos</ion-label>
@@ -15,6 +39,7 @@
       <ion-icon name="settings-outline"></ion-icon>
       <ion-label>Configuración</ion-label>
     </ion-tab-button>
+    
   </ion-tab-bar>
 
 </ion-tabs>
