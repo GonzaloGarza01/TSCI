@@ -1,0 +1,87 @@
+.container{
+    width: 100%;
+    display: none;
+    justify-content: center;
+    margin-top: 3rem;
+  
+    ion-grid{
+        display: flex;
+        justify-content: center;
+        margin: 0 0;
+  
+  
+        ion-row{
+            display: flex;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+  
+  
+    }
+  }
+.selected-container{
+    display: flex;
+}
+.class-btn{
+    display: flex;
+    justify-content: center;
+    ion-item{
+      cursor: pointer;
+      display: block;
+      align-items: center;
+      width: 50%;
+      height: fit-content;
+      max-width: 25rem;
+      --background: rgba(194, 194, 194, 0.356);
+      color: rgb(0, 0, 0);
+      font-size: 1.2rem;
+    }
+    .selected{
+        --background: white;
+        color: rgb(0, 0, 0);
+        font-weight: bold;
+      }
+  }
+
+  ion-content{
+    position: relative;
+    .buttonAddSession{
+        z-index: 2;
+        position: fixed;
+        bottom: 2rem;
+        right: 4rem;
+        font-size: 2rem;
+        font-weight: bold;
+        width: 3rem;
+        height: 4.2rem;
+        --border-radius: 100%;
+        --padding: 0;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    ion-content{
+        position: relative;
+        .buttonAddSession{
+            z-index: 2;
+            position: fixed;
+            bottom: 2rem;
+            right: 4rem;
+            font-size: 1.6rem;
+            font-weight: bold;
+            width: 3rem;
+            height: 3.5rem;
+            --border-radius: 100%;
+            --padding: 0;
+        }
+    }
+}
+h1{
+    font-size: 20px;
+    justify-content: center;
+    color: grey;
+}
+.contenido{
+    justify-content: center;
+    align-items: center;
+}
