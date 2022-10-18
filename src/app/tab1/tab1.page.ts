@@ -29,7 +29,6 @@ export class Tab1Page implements OnInit {
       if (snapshot.exists()) {
         this.infoUser = snapshot.val();
         this.role = this.infoUser.rol;
-        console.log(this.infoUser, this.role);
         if(this.role === 'tutor'){
           this.tutorView = true;
         }

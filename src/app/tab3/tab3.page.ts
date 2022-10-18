@@ -34,8 +34,6 @@ export class Tab3Page implements OnInit {
       component: ModalAboutComponent,
     });
     modal.present();
-
-    const { data, role } = await modal.onWillDismiss();
   }
 
   logOut(){
