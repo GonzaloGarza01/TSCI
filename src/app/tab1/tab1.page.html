@@ -6,7 +6,9 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- Vista de maestro -->
 <ion-content>
-
+  <div class="aviso_item" *ngFor="let item of alumnosArray | keyvalue">
+    <ion-row>{{item.value.nombre}}{{item.value.edad}}</ion-row>
+  </div>
+  <ion-button (click)="openModal()" class="buttonAddSession">+</ion-button>
 </ion-content>

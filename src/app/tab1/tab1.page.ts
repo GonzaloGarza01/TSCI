@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { child, get, getDatabase, onValue, ref,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
+import { ModalController } from '@ionic/angular';
+import { ModalAlumnosComponent } from '../components/modal-alumnos/modal-alumnos.component';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -12,14 +14,33 @@ export class Tab1Page implements OnInit {
   infoUser;
   tutorView: boolean;
   maestroView: boolean;
-  constructor() {}
+  alumnosArray: Array<any>;
+  constructor(
+    private modalCtrl: ModalController
+  ) {}
 
   ngOnInit() {
     const auth = getAuth();
     this.uid = auth.currentUser.uid;
     this.getRole();
+    this.getAvisos();
   }
 
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalAlumnosComponent,
+    });
+    modal.present();
+  }
+
+  getAvisos(){
+    const db = getDatabase();
+    const usersRef = ref(db, `alumnos`);
+    onValue(usersRef, (snapshot) => {
+      this.alumnosArray = snapshot.val();
+      console.log(this.alumnosArray);
+    });
+  }
 
   getRole(){
     const db = getDatabase();
