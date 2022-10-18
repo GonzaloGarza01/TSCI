@@ -45,6 +45,7 @@
 
   ion-content{
     position: relative;
+    --ion-background-color:#e9e9e9;
     .buttonAddSession{
         z-index: 2;
         position: fixed;
@@ -62,6 +63,7 @@
 @media screen and (max-width: 1000px) {
     ion-content{
         position: relative;
+        --ion-background-color:#e9e9e9;
         .buttonAddSession{
             z-index: 2;
             position: fixed;

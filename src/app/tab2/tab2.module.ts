@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Tab2Page } from './tab2.page';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
+import { ModalAvisosComponent } from '../components/modal-avisos/modal-avisos.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     FormsModule,
     Tab2PageRoutingModule
   ],
-  declarations: [Tab2Page]
+  declarations: [Tab2Page, ModalAvisosComponent]
 })
 export class Tab2PageModule {}
