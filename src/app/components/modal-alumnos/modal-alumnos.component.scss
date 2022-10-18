@@ -1,0 +1,30 @@
+ion-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --padding-top: 2rem;
+    --padding-start: 2rem;
+    --padding-end: 2rem;
+    --padding-bottom: 1rem;
+
+    .btn{
+        display: flex;
+        align-items: center;
+        justify-content: end;
+
+        a{
+            color: gray;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+        ion-button{
+            --background: rgb(226, 226, 226);
+            --color: black;
+        }
+    }
+    .select{
+        color: rgb(116, 116, 116);
+        padding-bottom: 1rem;
+    }
+}
