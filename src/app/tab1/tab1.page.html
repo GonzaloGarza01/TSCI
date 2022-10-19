@@ -7,8 +7,16 @@
 </ion-header>
 
 <ion-content>
+  <div class="selector">
+    <ion-select (ionChange)="handleChange($event)" [(ngModel)]="grupoSelected" interface="popover" placeholder="Seleccione un grupo">
+      <ion-select-option  *ngFor="let item of gruposNombre">{{item}}</ion-select-option>
+    </ion-select>   
+  </div>
   <div class="aviso_item" *ngFor="let item of alumnosArray | keyvalue">
     <ion-row>{{item.value.nombre}}{{item.value.edad}}</ion-row>
   </div>
-  <ion-button (click)="openModal()" class="buttonAddSession">+</ion-button>
+  <div class="button_alumno">
+    <ion-button (click)="openModal()" class="buttonAddSession">+</ion-button>
+    <!-- <ion-label>Agregar alumno</ion-label> -->
+  </div>
 </ion-content>
