@@ -28,3 +28,46 @@ ion-content{
         padding-bottom: 1rem;
     }
 }
+.class-btn{
+    display: flex;
+    justify-content: center;
+    ion-item{
+      cursor: pointer;
+      display: block;
+      align-items: center;
+      width: 50%;
+      height: fit-content;
+      max-width: 25rem;
+      --background: rgba(194, 194, 194, 0.356);
+      color: rgb(0, 0, 0);
+      font-size: 1.2rem;
+    }
+    .selected{
+        --background: white;
+        color: rgb(0, 0, 0);
+        font-weight: bold;
+      }
+  }
+  .container{
+    width: 100%;
+    display: none;
+    justify-content: center;
+    margin-top: 3rem;
+  
+    ion-grid{
+        display: flex;
+        justify-content: center;
+        margin: 0 0;
+
+        ion-row{
+            display: flex;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+  
+  
+    }
+  }
+.selected-container{
+    display: flex;
+}

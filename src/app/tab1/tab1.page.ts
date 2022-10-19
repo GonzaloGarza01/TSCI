@@ -15,6 +15,10 @@ export class Tab1Page implements OnInit {
   tutorView: boolean;
   maestroView: boolean;
   alumnosArray: Array<any>;
+  gruposArray: Array<any>;
+  gruposNombre: Array<any> = [];
+  grupoSelected;
+
   constructor(
     private modalCtrl: ModalController
   ) {}
@@ -23,9 +27,14 @@ export class Tab1Page implements OnInit {
     const auth = getAuth();
     this.uid = auth.currentUser.uid;
     this.getRole();
-    this.getAvisos();
+    this.getGrupos();
   }
 
+  handleChange(ev: Event) {
+    this.grupoSelected = (ev as CustomEvent).detail.value;
+    console.log(this.grupoSelected);
+    this.getAlumnos(this.grupoSelected);
+  }
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: ModalAlumnosComponent,
@@ -33,9 +42,21 @@ export class Tab1Page implements OnInit {
     modal.present();
   }
 
-  getAvisos(){
+  getGrupos(){
     const db = getDatabase();
-    const usersRef = ref(db, `alumnos`);
+    const usersRef = ref(db, `users/${this.uid}/grupos`);
+    onValue(usersRef, (snapshot) => {
+      this.gruposNombre = [];
+      this.gruposArray = snapshot.val();
+      Object.keys(this.gruposArray).forEach(key => {
+        this.gruposNombre.push(this.gruposArray[key].nombre);
+      });
+    });
+  }
+
+  getAlumnos(grupo){
+    const db = getDatabase();
+    const usersRef = ref(db, `users/${this.uid}/grupos/${grupo}/alumnos`);
     onValue(usersRef, (snapshot) => {
       this.alumnosArray = snapshot.val();
       console.log(this.alumnosArray);

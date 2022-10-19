@@ -1,59 +1,88 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Nuevo alumno
+      Agregar información
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="select">
-    <ion-text>Nombre del alumno</ion-text>
-    <ion-item>
-      <ion-input type="text"
-      [(ngModel)]="alumnos.name"
-      required class="register_input"
-    ></ion-input>
-    </ion-item>
-  </div>
-  <!-- <div class="select">
-    <ion-text>Grupo</ion-text>
-    <ion-item>
-      <ion-input type="text"
-      [(ngModel)]="alumnos.extra"
-      required class="register_input"
-    ></ion-input>
-    </ion-item>
-  </div> -->
-  <div class="select">
-    <ion-text>Edad del alumno</ion-text>
-    <ion-item>
-      <ion-input type="number"
-      [(ngModel)]="alumnos.edad"
-      required class="register_input"
-    ></ion-input>
-    </ion-item>
-  </div>
-  <div class="select">
-    <ion-text>Contacto del tutor</ion-text>
-    <ion-item>
-      <ion-input type="tel"
-      [(ngModel)]="alumnos.number"
-      required class="register_input"
-    ></ion-input>
-    </ion-item>
-  </div>
-  <div class="select">
-    <ion-text>Comentarios adicionales</ion-text>
-    <ion-item>
-      <ion-input type="text"
-      [(ngModel)]="alumnos.extra"
-      required class="register_input"
-    ></ion-input>
-    </ion-item>
-  </div>
-  <div class="btn">
-    <a (click)="dismissModal()">Cancelar</a>
-    <ion-button type="submit" (click)="onSave()" >Confirmar</ion-button>
-  </div>
+
+    <div class="class-btn">
+      <ion-item id="section-tareas" class="selected" (click)="tareasSection()">Agregar grupo</ion-item>
+      <ion-item id="section-calificaciones"  (click)="calificacionesSection()">Agregar alumno</ion-item>
+    </div>
+  
+    <div class="container selected-container" id="tareas-container">
+      <div class="form-input">
+        <div class="select">
+          <ion-text>Nombre del Grupo</ion-text>
+          <ion-item>
+            <ion-input type="text"
+            [(ngModel)]="grupos.name"
+            required class="register_input"
+          ></ion-input>
+          </ion-item>
+        </div>  
+        <div class="btn">
+          <a (click)="dismissModal()">Cancelar</a>
+          <ion-button type="submit" (click)="onSaveGrupo()" >Confirmar</ion-button>
+        </div>      
+      </div>
+    </div>
+  
+    <div class="container" id="calif-container">
+      <div class="form-input">
+        <div class="select">
+          <ion-text>Nombre del alumno</ion-text>
+          <ion-item>
+            <ion-input type="text"
+            [(ngModel)]="alumnos.name"
+            required class="register_input"
+          ></ion-input>
+          </ion-item>
+        </div>
+        <div class="select">
+          <ion-text>Grupo</ion-text>
+          <ion-item>
+            <ion-select [(ngModel)]="alumnos.grupo" interface="popover">
+              <ion-select-option  *ngFor="let item of gruposNombre" value="{{item}}">{{item}}</ion-select-option>
+            </ion-select> 
+          </ion-item>
+        </div>
+        <div class="select">
+          <ion-text>Edad del alumno</ion-text>
+          <ion-item>
+            <ion-input type="number"
+            [(ngModel)]="alumnos.edad"
+            required class="register_input"
+          ></ion-input>
+          </ion-item>
+        </div>
+        <div class="select">
+          <ion-text>Contacto del tutor</ion-text>
+          <ion-item>
+            <ion-input type="tel"
+            [(ngModel)]="alumnos.number"
+            required class="register_input"
+          ></ion-input>
+          </ion-item>
+        </div>
+        <div class="select">
+          <ion-text>Comentarios adicionales</ion-text>
+          <ion-item>
+            <ion-input type="text"
+            [(ngModel)]="alumnos.extra"
+            required class="register_input"
+          ></ion-input>
+          </ion-item>
+        </div>
+        <div class="btn">
+          <a (click)="dismissModal()">Cancelar</a>
+          <ion-button type="submit" (click)="onSave()" >Confirmar</ion-button>
+        </div>
+      </div>
+    </div>
+
+
 </ion-content>
