@@ -13,7 +13,7 @@
     </ion-select>   
   </div>
   <div class="aviso_item" *ngFor="let item of alumnosArray | keyvalue">
-    <ion-row>{{item.value.nombre}}{{item.value.edad}}</ion-row>
+    <ion-row>{{item.value.nombre}}</ion-row>
   </div>
   <div class="button_alumno">
     <ion-button (click)="openModal()" class="buttonAddSession">+</ion-button>

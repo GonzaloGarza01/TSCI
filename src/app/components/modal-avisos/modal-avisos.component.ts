@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, push } from 'firebase/database';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -22,9 +22,12 @@ export class ModalAvisosComponent implements OnInit {
 
   async onSave(){
     try {
-      if(this.aviso.title && this.aviso.body && this.aviso.id){
+      if(this.aviso.title && this.aviso.body){
         const db = getDatabase();
-        set(ref(db, 'avisos/' + this.aviso.id), {
+        const usersRef = ref(db, 'avisos')
+        const pushData = push(usersRef)
+        const id  = pushData.key;
+        set(ref(db, 'avisos/' + id), {
           titulo: this.aviso.title,
           descripcion: this.aviso.body,
         })
