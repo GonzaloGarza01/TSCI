@@ -12,9 +12,19 @@
       <ion-select-option  *ngFor="let item of gruposNombre">{{item}}</ion-select-option>
     </ion-select>   
   </div>
-  <div class="aviso_item" *ngFor="let item of alumnosArray | keyvalue">
-    <ion-row>{{item.value.nombre}}</ion-row>
-  </div>
+  <ion-list>
+    <ion-item  *ngFor="let item of alumnosArray | keyvalue">
+      <ion-avatar slot="start">
+        <img src="https://cdn.discordapp.com/attachments/522699340771360773/971273566857359420/Logro4.png">
+      </ion-avatar>
+      <ion-label>
+        {{item.value.nombre}}
+        <p>{{item.value.contacto}}</p>
+      </ion-label>
+      <ion-badge slot="end"><ion-icon name="arrow-forward-outline"></ion-icon></ion-badge>
+    </ion-item>
+  </ion-list>
+  
   <div class="button_alumno">
     <ion-button (click)="openModal()" class="buttonAddSession">+</ion-button>
     <!-- <ion-label>Agregar alumno</ion-label> -->

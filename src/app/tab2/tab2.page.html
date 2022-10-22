@@ -8,8 +8,15 @@
 
 <ion-content>
   <div class="aviso_item" *ngFor="let item of avisosArray | keyvalue">
-    <ion-row>{{item.value.titulo}}</ion-row>
-    <ion-row style="color:grey; padding-top:10px">{{item.value.descripcion}}</ion-row>
+    <div class="img_side" style="padding-right:20px ;">
+      <ion-avatar slot="start">
+        <img src="https://cdn.discordapp.com/attachments/522699340771360773/1033219923218018304/aviso3.png">
+      </ion-avatar>
+    </div>
+    <div class="text_side">
+      <ion-row>{{item.value.titulo}}</ion-row>
+      <ion-row style="color:grey; padding-top:10px">{{item.value.descripcion}}</ion-row>
+    </div>
   </div>
   <ion-button (click)="openModal()" *ngIf="maestroView" class="buttonAddSession">+</ion-button>
 </ion-content>
