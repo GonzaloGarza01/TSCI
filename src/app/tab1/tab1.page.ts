@@ -3,6 +3,7 @@ import { child, get, getDatabase, onValue, ref,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
 import { ModalController } from '@ionic/angular';
 import { ModalAlumnosComponent } from '../components/modal-alumnos/modal-alumnos.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -20,7 +21,8 @@ export class Tab1Page implements OnInit {
   grupoSelected;
 
   constructor(
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -81,6 +83,10 @@ export class Tab1Page implements OnInit {
         console.log("No data available");
       }
     });
+  }
+
+  goToInfo(grupo, nombre){
+    this.router.navigate(['/data-alumno'], { queryParams: { grupo: grupo, nombre:nombre } });
   }
 
 }
