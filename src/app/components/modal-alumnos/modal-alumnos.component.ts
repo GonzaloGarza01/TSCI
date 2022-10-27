@@ -35,9 +35,7 @@ export class ModalAlumnosComponent implements OnInit {
       this.gruposArray = snapshot.val();
       Object.keys(this.gruposArray).forEach(key => {
         this.gruposNombre.push(this.gruposArray[key].nombre);
-        console.log(this.gruposArray[key].nombre);
       });
-      console.log(this.gruposNombre);
     });
   }
 

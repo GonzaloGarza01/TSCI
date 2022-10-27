@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { child, get, getDatabase, onValue, ref,  } from 'firebase/database';
+import { getDatabase, onValue, ref,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
+import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { ModalTareasComponent } from '../components/modal-tareas/modal-tareas.component';
+
+
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
@@ -12,13 +17,39 @@ export class Tab4Page implements OnInit {
   infoUser;
   tutorView: boolean;
   maestroView: boolean;
-  constructor() { }
+
+  grupoInfo;
+  tareaInfo;
+  allTareas: Array<any>;
+
+  constructor(
+    private modalCtrl: ModalController,
+  ) { }
 
   ngOnInit() {
     const auth = getAuth();
     this.uid = auth.currentUser.uid;
     this.getRole();
+    this.getTareas();
   }
+
+  getTareas(){
+    const db = getDatabase();
+    const usersRef = ref(db, `users/${this.uid}/grupos/`);
+    this.tareaInfo = {};
+    onValue(usersRef, (snapshot) => {
+      this.grupoInfo = snapshot.val();
+      Object.keys(this.grupoInfo).forEach(key => {
+        if(this.grupoInfo[key]?.tareas){
+          // console.log(this.grupoInfo[key].tareas);
+          this.allTareas = Object.assign(this.tareaInfo, this.grupoInfo[key].tareas);
+        }
+      });
+      console.log(this.allTareas);
+    });
+  }
+
+
 
   getRole(){
     const db = getDatabase();
@@ -38,6 +69,13 @@ export class Tab4Page implements OnInit {
         console.log("No data available");
       }
     });
+  }
+  
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalTareasComponent,
+    });
+    modal.present();
   }
 
   async tareasSection(){

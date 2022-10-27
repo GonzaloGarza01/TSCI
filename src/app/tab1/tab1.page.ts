@@ -37,6 +37,7 @@ export class Tab1Page implements OnInit {
     console.log(this.grupoSelected);
     this.getAlumnos(this.grupoSelected);
   }
+
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: ModalAlumnosComponent,
