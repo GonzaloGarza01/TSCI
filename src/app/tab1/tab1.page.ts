@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { child, get, getDatabase, onValue, ref,  } from 'firebase/database';
+import { getDatabase, onValue, ref,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
 import { ModalController } from '@ionic/angular';
 import { ModalAlumnosComponent } from '../components/modal-alumnos/modal-alumnos.component';
@@ -34,7 +34,6 @@ export class Tab1Page implements OnInit {
 
   handleChange(ev: Event) {
     this.grupoSelected = (ev as CustomEvent).detail.value;
-    console.log(this.grupoSelected);
     this.getAlumnos(this.grupoSelected);
   }
 

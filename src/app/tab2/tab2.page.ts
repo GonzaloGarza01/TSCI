@@ -33,7 +33,6 @@ export class Tab2Page implements OnInit {
     const usersRef = ref(db, `avisos`);
     onValue(usersRef, (snapshot) => {
       this.avisosArray = snapshot.val();
-      console.log(this.avisosArray);
     });
   }
 
