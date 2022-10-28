@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import { getAuth } from "firebase/auth";
+import { ActivatedRoute } from '@angular/router';
 import { getDatabase, onValue, ref,  } from 'firebase/database';
 
 @Component({
-  selector: 'app-data-alumno',
-  templateUrl: './data-alumno.page.html',
-  styleUrls: ['./data-alumno.page.scss'],
+  selector: 'app-data-tarea',
+  templateUrl: './data-tarea.page.html',
+  styleUrls: ['./data-tarea.page.scss'],
 })
-export class DataAlumnoPage implements OnInit {
-
-  info;
+export class DataTareaPage implements OnInit {
   uid;
-  dataUser;
-
+  info;
+  dataTarea;
   constructor(
     private route: ActivatedRoute,
   ) { }
@@ -29,12 +27,12 @@ export class DataAlumnoPage implements OnInit {
 
   getInfoBD(){
     const db = getDatabase();
-    const dbRef = ref(db, `users/${this.uid}/grupos/${this.info.params.grupo}/alumnos/${this.info.params.nombre}`);
-    console.log(this.uid, this.info.params.grupo, this.info.params.nombre);
+    const dbRef = ref(db, `users/${this.uid}/grupos/${this.info.params.grupo}/tareas/${this.info.params.id}`);
+    console.log(this.uid, this.info.params.grupo, this.info.params.id);
     onValue(dbRef, (snapshot) => {
       if (snapshot.exists()) {
-        this.dataUser = snapshot.val();
-        console.log(this.dataUser);
+        this.dataTarea = snapshot.val();
+        console.log(this.dataTarea);
       } else {
         console.log("No data available");
       }

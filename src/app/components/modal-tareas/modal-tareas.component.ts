@@ -53,6 +53,7 @@ export class ModalTareasComponent implements OnInit {
           descripcion: this.tareas.descripcion,
           grupo: this.tareas.grupo,
           fecha: this.tareas.fecha,
+          id: id,
         })
         .then(()=>{
           this.presentToast('Tarea registrada');
