@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/asignaciones"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+      <div class="header_sec">
+        <ion-label style="font-size:large; font-weight:bold;" *ngIf="dataTarea.nombre" class="ion-text">{{dataTarea.nombre}}</ion-label>
+        <p *ngIf="dataTarea.fecha">Fecha vencimiento {{dataTarea.fecha}}</p>
+      </div>
+      <div class="body_sec">
+        <ion-label *ngIf="dataTarea.descripcion" class="ion-text"><p>Descripción: </p>{{dataTarea.descripcion}}</ion-label>
+        <ion-label *ngIf="dataTarea.grupo" class="ion-text"><p style="margin-top:20px ;">Grupo: </p>{{dataTarea.grupo}}</ion-label>
+      </div>
+  </div>
+</ion-content>

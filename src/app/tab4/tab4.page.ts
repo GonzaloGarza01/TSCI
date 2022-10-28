@@ -24,6 +24,8 @@ export class Tab4Page implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
+    private router: Router,
+
   ) { }
 
   ngOnInit() {
@@ -49,7 +51,9 @@ export class Tab4Page implements OnInit {
     });
   }
 
-
+  goToInfo(grupo, id){
+    this.router.navigate(['/data-tarea'], { queryParams: { grupo: grupo, id :id } });
+  }
 
   getRole(){
     const db = getDatabase();

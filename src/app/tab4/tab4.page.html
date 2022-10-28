@@ -12,7 +12,7 @@
 
   <div class="container selected-container" id="tareas-container">
     <ion-list>
-      <div class="aviso_item" lines="full" *ngFor="let item of allTareas | keyvalue">
+      <div class="aviso_item" lines="full" *ngFor="let item of allTareas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>
