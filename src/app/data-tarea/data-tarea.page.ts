@@ -28,11 +28,9 @@ export class DataTareaPage implements OnInit {
   getInfoBD(){
     const db = getDatabase();
     const dbRef = ref(db, `users/${this.uid}/grupos/${this.info.params.grupo}/tareas/${this.info.params.id}`);
-    console.log(this.uid, this.info.params.grupo, this.info.params.id);
     onValue(dbRef, (snapshot) => {
       if (snapshot.exists()) {
         this.dataTarea = snapshot.val();
-        console.log(this.dataTarea);
       } else {
         console.log("No data available");
       }

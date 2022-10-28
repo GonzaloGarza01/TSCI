@@ -30,11 +30,9 @@ export class DataAlumnoPage implements OnInit {
   getInfoBD(){
     const db = getDatabase();
     const dbRef = ref(db, `users/${this.uid}/grupos/${this.info.params.grupo}/alumnos/${this.info.params.nombre}`);
-    console.log(this.uid, this.info.params.grupo, this.info.params.nombre);
     onValue(dbRef, (snapshot) => {
       if (snapshot.exists()) {
         this.dataUser = snapshot.val();
-        console.log(this.dataUser);
       } else {
         console.log("No data available");
       }

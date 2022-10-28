@@ -21,6 +21,12 @@ export class Tab4Page implements OnInit {
   grupoInfo;
   tareaInfo;
   allTareas: Array<any>;
+  grupoSelected;
+  gruposNombre: Array<any> = [];
+  tareasArr: Array<any>;
+  gruposArray: Array<any>;
+
+  filtro: boolean;
 
   constructor(
     private modalCtrl: ModalController,
@@ -32,10 +38,40 @@ export class Tab4Page implements OnInit {
     const auth = getAuth();
     this.uid = auth.currentUser.uid;
     this.getRole();
-    this.getTareas();
+    this.getAllTareas();
+    this.getGrupos();
   }
 
-  getTareas(){
+  handleChange(ev: Event) {
+    this.grupoSelected = (ev as CustomEvent).detail.value;
+    if(this.grupoSelected == "Sin filtro"){
+      this.filtro = false;
+    } else this.getTareas(this.grupoSelected);
+  }
+
+  getGrupos(){
+    const db = getDatabase();
+    const usersRef = ref(db, `users/${this.uid}/grupos`);
+    onValue(usersRef, (snapshot) => {
+      this.gruposNombre = [];
+      this.gruposArray = snapshot.val();
+      Object.keys(this.gruposArray).forEach(key => {
+        this.gruposNombre.push(this.gruposArray[key].nombre);
+      });
+    });
+  }
+
+  getTareas(grupo){
+    this.filtro = true;
+    const db = getDatabase();
+    const usersRef = ref(db, `users/${this.uid}/grupos/${grupo}/tareas`);
+    onValue(usersRef, (snapshot) => {
+      this.tareasArr = snapshot.val();
+    });
+  }
+
+  getAllTareas(){
+    this.filtro = false;
     const db = getDatabase();
     const usersRef = ref(db, `users/${this.uid}/grupos/`);
     this.tareaInfo = {};
@@ -47,7 +83,6 @@ export class Tab4Page implements OnInit {
           this.allTareas = Object.assign(this.tareaInfo, this.grupoInfo[key].tareas);
         }
       });
-      console.log(this.allTareas);
     });
   }
 

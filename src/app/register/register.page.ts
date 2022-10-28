@@ -39,7 +39,6 @@ export class RegisterPage implements OnInit {
               })
               .then(()=>{
                 this.presentToast('Usuario registrado, favor de confirmar desde su correo');
-                console.log('User', user);
                 this.user.name = '';
                 this.user.email = '';
                 this.user.pass = '';

@@ -45,7 +45,6 @@ export class ModalTareasComponent implements OnInit {
       const usersRef = ref(db, 'users/' + this.uid + '/grupos/')
       const pushData = push(usersRef)
       const id  = pushData.key;
-      console.log(id);
       if(this.tareas.name && this.tareas.descripcion && this.tareas.grupo && this.tareas.fecha){
         const db = getDatabase();
         set(ref(db, `users/${this.uid}/grupos/${this.tareas.grupo}/tareas/${id}`), {

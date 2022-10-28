@@ -10,8 +10,15 @@
     <ion-item id="section-calificaciones"  (click)="calificacionesSection()">Vencidas</ion-item>
   </div>
 
+  <div class="selector">
+    <ion-select (ionChange)="handleChange($event)" [(ngModel)]="grupoSelected" interface="popover" placeholder="Filtrar por grupo">
+      <ion-select-option  *ngFor="let item of gruposNombre">{{item}}</ion-select-option>
+      <ion-select-option>Sin filtro</ion-select-option>
+    </ion-select>   
+  </div>
+
   <div class="container selected-container" id="tareas-container">
-    <ion-list>
+    <ion-list *ngIf="!filtro">
       <div class="aviso_item" lines="full" *ngFor="let item of allTareas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
         <ion-label>
           {{item.value.nombre}}
@@ -21,6 +28,18 @@
         </ion-label>
       </div>
     </ion-list>
+
+    <ion-list *ngIf="filtro">
+      <div class="aviso_item" lines="full" *ngFor="let item of tareasArr | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+        <ion-label>
+          {{item.value.nombre}}
+          <p>{{item.value.grupo}}</p>
+          <p>{{item.value.fecha}}</p>
+          <p>{{item.value.descripcion}}</p>
+        </ion-label>
+      </div>
+    </ion-list>
+    
   </div>
 
   <div class="container" id="calif-container">

@@ -103,7 +103,6 @@ export class ModalAlumnosComponent implements OnInit {
         const usersRef = ref(db, 'users/' + this.uid + '/grupos/')
         const pushData = push(usersRef)
         const id  = pushData.key;
-        console.log(id);
         set(ref(db, 'users/' + this.uid + '/grupos/' + this.grupos.name), {
           //id: crear id,
           nombre: this.grupos.name,
