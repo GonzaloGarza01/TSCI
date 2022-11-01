@@ -17,4 +17,11 @@
         <ion-label *ngIf="dataTarea.grupo" class="ion-text"><p style="margin-top:20px ;">Grupo: </p>{{dataTarea.grupo}}</ion-label>
       </div>
   </div>
+
+  <div class="footer" *ngIf="maestroView">
+      <ion-button *ngIf="estado === 'activo'" color="tertiary" (click)="finalizarTarea()"> Finalizar Tarea</ion-button>
+      <ion-button *ngIf="estado === 'finalizado'" color="tertiary" (click)="activarTarea()"> Activar Tarea</ion-button>
+  </div>
+
+
 </ion-content>
