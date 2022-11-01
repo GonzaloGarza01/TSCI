@@ -61,7 +61,6 @@ export class Tab1Page implements OnInit {
     const usersRef = ref(db, `users/${this.uid}/grupos/${grupo}/alumnos`);
     onValue(usersRef, (snapshot) => {
       this.alumnosArray = snapshot.val();
-      console.log(this.alumnosArray);
     });
   }
 

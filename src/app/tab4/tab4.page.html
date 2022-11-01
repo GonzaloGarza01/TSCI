@@ -19,7 +19,7 @@
 
   <div class="container selected-container" id="tareas-container">
     <ion-list *ngIf="!filtro">
-      <div class="aviso_item" lines="full" *ngFor="let item of allTareas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+      <div class="aviso_item" lines="full" *ngFor="let item of tareasActivas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>
@@ -30,7 +30,7 @@
     </ion-list>
 
     <ion-list *ngIf="filtro">
-      <div class="aviso_item" lines="full" *ngFor="let item of tareasArr | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+      <div class="aviso_item" lines="full" *ngFor="let item of tareasGrupoActivas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>
@@ -43,11 +43,27 @@
   </div>
 
   <div class="container" id="calif-container">
-    <ion-grid>
-      <ion-row>
-        <h1>Aquí aparecaran las calificaciones</h1>
-      </ion-row>
-    </ion-grid>
+    <ion-list *ngIf="!filtro">
+      <div class="aviso_item" lines="full" *ngFor="let item of tareasFinalizadas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+        <ion-label>
+          {{item.value.nombre}}
+          <p>{{item.value.grupo}}</p>
+          <p>{{item.value.fecha}}</p>
+          <p>{{item.value.descripcion}}</p>
+        </ion-label>
+      </div>
+    </ion-list>
+
+    <ion-list *ngIf="filtro">
+      <div class="aviso_item" lines="full" *ngFor="let item of tareasGrupoFinalizadas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+        <ion-label>
+          {{item.value.nombre}}
+          <p>{{item.value.grupo}}</p>
+          <p>{{item.value.fecha}}</p>
+          <p>{{item.value.descripcion}}</p>
+        </ion-label>
+      </div>
+    </ion-list>
   </div>
   <ion-button *ngIf="maestroView" (click)="openModal()" class="buttonAddSession">+</ion-button>
 </ion-content>

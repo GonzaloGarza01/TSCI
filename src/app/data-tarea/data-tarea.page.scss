@@ -6,3 +6,21 @@
 .body_sec{
     margin-top: 50px;
 }
+
+ion-checkbox {
+    --size: 20px;
+    --background-checked: #50C878;
+  }
+
+ion-checkbox::part(container) {
+border-radius: 6px;
+border: 2px solid #50C878;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

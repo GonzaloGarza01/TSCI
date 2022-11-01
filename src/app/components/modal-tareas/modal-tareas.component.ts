@@ -47,12 +47,13 @@ export class ModalTareasComponent implements OnInit {
       const id  = pushData.key;
       if(this.tareas.name && this.tareas.descripcion && this.tareas.grupo && this.tareas.fecha){
         const db = getDatabase();
-        set(ref(db, `users/${this.uid}/grupos/${this.tareas.grupo}/tareas/${id}`), {
+        set(ref(db, `users/${this.uid}/tareas/${id}`), {
           nombre: this.tareas.name,
           descripcion: this.tareas.descripcion,
           grupo: this.tareas.grupo,
           fecha: this.tareas.fecha,
           id: id,
+          estado: 'activo'
         })
         .then(()=>{
           this.presentToast('Tarea registrada');

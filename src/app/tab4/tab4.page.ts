@@ -5,7 +5,6 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ModalTareasComponent } from '../components/modal-tareas/modal-tareas.component';
 
-
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
@@ -17,16 +16,19 @@ export class Tab4Page implements OnInit {
   infoUser;
   tutorView: boolean;
   maestroView: boolean;
-
-  grupoInfo;
-  tareaInfo;
-  allTareas: Array<any>;
   grupoSelected;
-  gruposNombre: Array<any> = [];
-  tareasArr: Array<any>;
+  gruposNombre = [];
+  tareasArr: any = {};
   gruposArray: Array<any>;
-
   filtro: boolean;
+
+  allArrays: any = {};
+  tareasActivas: Array<any>;
+  tareasFinalizadas: Array<any>;
+  tareasGrupoActivas: Array<any>;
+  tareasGrupoFinalizadas: Array<any>;
+  
+
 
   constructor(
     private modalCtrl: ModalController,
@@ -42,13 +44,67 @@ export class Tab4Page implements OnInit {
     this.getGrupos();
   }
 
-  handleChange(ev: Event) {
-    this.grupoSelected = (ev as CustomEvent).detail.value;
-    if(this.grupoSelected == "Sin filtro"){
-      this.filtro = false;
-    } else this.getTareas(this.grupoSelected);
+  //Traer las tareas
+  getAllTareas(){
+    this.filtro = false;
+    const db = getDatabase();
+    const usersRef = ref(db, `users/${this.uid}/tareas`);
+    onValue(usersRef, (snapshot) => {
+      if (this.allArrays) {
+        this.allArrays = {};
+      }
+      this.tareasActivas = [];
+      this.tareasFinalizadas = [];
+      this.allArrays.allTareas = snapshot.val();
+      if(this.allArrays.allTareas){
+        Object.keys(this.allArrays.allTareas).forEach(key => {
+          if(this.allArrays.allTareas[key].estado === 'activo'){
+            if(!this.tareasActivas[key]){
+              this.tareasActivas[key] = this.allArrays.allTareas[key];
+            }
+          } else{
+            if(!this.tareasFinalizadas[key]){
+              this.tareasFinalizadas[key] = this.allArrays.allTareas[key];
+            }
+          }
+        });
+      }
+    });
   }
 
+    //Traer las tareas de la BD con filtro
+    getTareas(grupo){
+      this.filtro = true;
+      const db = getDatabase();
+      const usersRef = ref(db, `users/${this.uid}/tareas`);
+      onValue(usersRef, (snapshot) => {
+        if(this.tareasArr){
+          this.tareasArr = {}
+        }
+        this.tareasGrupoActivas = [];
+        this.tareasGrupoFinalizadas = [];
+        this.tareasArr = snapshot.val();
+        if(this.tareasArr){
+          Object.keys(this.tareasArr).forEach(key => {
+            if(this.tareasArr[key].grupo === grupo){
+              if(this.allArrays.allTareas[key].estado === 'activo'){
+                if(!this.tareasGrupoActivas[key]){
+                  this.tareasGrupoActivas[key] = this.tareasArr[key];
+                }
+              }
+              else{
+                if(!this.tareasGrupoFinalizadas[key]){
+                  this.tareasGrupoFinalizadas[key] = this.tareasArr[key];
+                }
+              }
+            }
+          });
+        }
+      });
+    }
+
+  
+  //Traer los grupos de la BD
   getGrupos(){
     const db = getDatabase();
     const usersRef = ref(db, `users/${this.uid}/grupos`);
@@ -61,35 +117,23 @@ export class Tab4Page implements OnInit {
     });
   }
 
-  getTareas(grupo){
-    this.filtro = true;
-    const db = getDatabase();
-    const usersRef = ref(db, `users/${this.uid}/grupos/${grupo}/tareas`);
-    onValue(usersRef, (snapshot) => {
-      this.tareasArr = snapshot.val();
-    });
+  //Filtrar por grupo
+  handleChange(ev: Event) {
+    this.grupoSelected = (ev as CustomEvent).detail.value;
+    if(this.grupoSelected == "Sin filtro"){
+      this.filtro = false;
+    } else this.getTareas(this.grupoSelected);
   }
 
-  getAllTareas(){
-    this.filtro = false;
-    const db = getDatabase();
-    const usersRef = ref(db, `users/${this.uid}/grupos/`);
-    this.tareaInfo = {};
-    onValue(usersRef, (snapshot) => {
-      this.grupoInfo = snapshot.val();
-      Object.keys(this.grupoInfo).forEach(key => {
-        if(this.grupoInfo[key]?.tareas){
-          // console.log(this.grupoInfo[key].tareas);
-          this.allTareas = Object.assign(this.tareaInfo, this.grupoInfo[key].tareas);
-        }
-      });
-    });
-  }
 
+
+
+  //Navegación
   goToInfo(grupo, id){
     this.router.navigate(['/data-tarea'], { queryParams: { grupo: grupo, id :id } });
   }
 
+  //Traer el rol del usuario
   getRole(){
     const db = getDatabase();
     const dbRef = ref(db, 'users/' + this.uid);
