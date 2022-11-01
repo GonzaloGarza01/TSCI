@@ -1,17 +1,32 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Alumnos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+<ion-content>
+  <div class="selector">
+    <ion-select (ionChange)="handleChange($event)" [(ngModel)]="grupoSelected" interface="popover" placeholder="Seleccione un grupo">
+      <ion-select-option  *ngFor="let item of gruposNombre">{{item}}</ion-select-option>
+    </ion-select>   
+  </div>
+  <ion-list>
+    <ion-item  lines="full" *ngFor="let item of alumnosArray | keyvalue" (click)="goToInfo(item.value.grupo, item.value.nombre)">
+      <ion-avatar slot="start">
+        <img src="https://cdn.discordapp.com/attachments/522699340771360773/971273566857359420/Logro4.png">
+      </ion-avatar>
+      <ion-label>
+        {{item.value.nombre}}
+        <p>{{item.value.contacto}}</p>
+      </ion-label>
+      <ion-badge slot="end"><ion-icon name="arrow-forward-outline"></ion-icon></ion-badge>
+    </ion-item>
+  </ion-list>
+  
+  <div class="button_alumno">
+    <ion-button (click)="openModal()" class="buttonAddSession">+</ion-button>
+    <!-- <ion-label>Agregar alumno</ion-label> -->
+  </div>
 </ion-content>
