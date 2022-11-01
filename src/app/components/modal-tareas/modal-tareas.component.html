@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Agregar información
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+    <div class="container">
+      <div class="form-input">
+        <div class="select">
+          <ion-text>Nombre de la tarea</ion-text>
+          <ion-item>
+            <ion-input type="text"
+            [(ngModel)]="tareas.name"
+            required class="register_input"
+          ></ion-input>
+          </ion-item>
+        </div>
+        <div class="select">
+          <ion-text>Grupo</ion-text>
+          <ion-item>
+            <ion-select [(ngModel)]="tareas.grupo" interface="popover">
+              <ion-select-option  *ngFor="let item of gruposNombre" value="{{item}}">{{item}}</ion-select-option>
+            </ion-select> 
+          </ion-item>
+        </div>
+        <div class="select">
+          <ion-text>Descripción</ion-text>
+          <ion-item>
+            <ion-input type="text"
+            [(ngModel)]="tareas.descripcion"
+            required class="register_input"
+          ></ion-input>
+          </ion-item>
+        </div>
+        <div class="select">
+          <ion-text>Fecha</ion-text>
+          <ion-item>
+            <ion-input type="date"
+            [(ngModel)]="tareas.fecha"
+            required class="register_input"
+          ></ion-input>
+          </ion-item>
+        </div>
+        <div class="btn">
+          <a (click)="dismissModal()">Cancelar</a>
+          <ion-button type="submit" (click)="onSave()" >Confirmar</ion-button>
+        </div>
+      </div>
+    </div>
+
+
+</ion-content>

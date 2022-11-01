@@ -6,24 +6,64 @@
 
 <ion-content>
   <div class="class-btn">
-    <ion-item id="section-tareas" class="selected" (click)="tareasSection()">Pendientes</ion-item>
-    <ion-item id="section-calificaciones"  (click)="calificacionesSection()">Calificaciones</ion-item>
+    <ion-item lines="full" id="section-tareas" class="selected" (click)="tareasSection()">Asignadas</ion-item>
+    <ion-item id="section-calificaciones"  (click)="calificacionesSection()">Vencidas</ion-item>
+  </div>
+
+  <div class="selector">
+    <ion-select (ionChange)="handleChange($event)" [(ngModel)]="grupoSelected" interface="popover" placeholder="Filtrar por grupo">
+      <ion-select-option  *ngFor="let item of gruposNombre">{{item}}</ion-select-option>
+      <ion-select-option>Sin filtro</ion-select-option>
+    </ion-select>   
   </div>
 
   <div class="container selected-container" id="tareas-container">
-    <ion-grid>
-      <ion-row >
-        <h1>Aquí aparecerán las tareas asignadas</h1>
-      </ion-row>
-    </ion-grid>
+    <ion-list *ngIf="!filtro">
+      <div class="aviso_item" lines="full" *ngFor="let item of tareasActivas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+        <ion-label>
+          {{item.value.nombre}}
+          <p>{{item.value.grupo}}</p>
+          <p>{{item.value.fecha}}</p>
+          <p>{{item.value.descripcion}}</p>
+        </ion-label>
+      </div>
+    </ion-list>
+
+    <ion-list *ngIf="filtro">
+      <div class="aviso_item" lines="full" *ngFor="let item of tareasGrupoActivas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+        <ion-label>
+          {{item.value.nombre}}
+          <p>{{item.value.grupo}}</p>
+          <p>{{item.value.fecha}}</p>
+          <p>{{item.value.descripcion}}</p>
+        </ion-label>
+      </div>
+    </ion-list>
+    
   </div>
 
   <div class="container" id="calif-container">
-    <ion-grid>
-      <ion-row>
-        <h1>Aquí aparecaran las calificaciones</h1>
-      </ion-row>
-    </ion-grid>
+    <ion-list *ngIf="!filtro">
+      <div class="aviso_item" lines="full" *ngFor="let item of tareasFinalizadas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+        <ion-label>
+          {{item.value.nombre}}
+          <p>{{item.value.grupo}}</p>
+          <p>{{item.value.fecha}}</p>
+          <p>{{item.value.descripcion}}</p>
+        </ion-label>
+      </div>
+    </ion-list>
+
+    <ion-list *ngIf="filtro">
+      <div class="aviso_item" lines="full" *ngFor="let item of tareasGrupoFinalizadas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+        <ion-label>
+          {{item.value.nombre}}
+          <p>{{item.value.grupo}}</p>
+          <p>{{item.value.fecha}}</p>
+          <p>{{item.value.descripcion}}</p>
+        </ion-label>
+      </div>
+    </ion-list>
   </div>
-  <ion-button *ngIf="maestroView" class="buttonAddSession">+</ion-button>
+  <ion-button *ngIf="maestroView" (click)="openModal()" class="buttonAddSession">+</ion-button>
 </ion-content>

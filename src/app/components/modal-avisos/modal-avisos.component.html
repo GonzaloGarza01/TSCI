@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Nuevo aviso
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="selectBook">
+    <ion-text>Titulo del aviso</ion-text>
+    <ion-item>
+      <ion-input type="text"
+      [(ngModel)]="aviso.title"
+      required class="register_input"
+    ></ion-input>
+    </ion-item>
+  </div>
+  <div class="selectBook">
+    <ion-text>Descripción del aviso</ion-text>
+    <ion-item>
+      <ion-input type="text"
+      [(ngModel)]="aviso.body"
+      required class="register_input"
+    ></ion-input>
+    </ion-item>
+  </div>
+  <div class="btn">
+    <a (click)="dismissModal()">Cancelar</a>
+    <ion-button type="submit" (click)="onSave()" >Generar aviso</ion-button>
+  </div>
+</ion-content>

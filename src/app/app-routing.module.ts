@@ -33,7 +33,21 @@ const routes: Routes = [
   {
     path: 'tab4',
     loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
+  },
+  {
+    path: 'data-alumno',
+    loadChildren: () => import('./data-alumno/data-alumno.module').then( m => m.DataAlumnoPageModule),
+    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin},
+
+  },
+  {
+    path: 'data-tarea',
+    loadChildren: () => import('./data-tarea/data-tarea.module').then( m => m.DataTareaPageModule),
+    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin},
+
   }
+
+
 
 
 

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
+import { ModalAlumnosComponent } from '../components/modal-alumnos/modal-alumnos.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
     FormsModule,
     Tab1PageRoutingModule
   ],
-  declarations: [Tab1Page]
+  declarations: [Tab1Page, ModalAlumnosComponent]
 })
 export class Tab1PageModule {}

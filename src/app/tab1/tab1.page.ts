@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { child, get, getDatabase, onValue, ref,  } from 'firebase/database';
+import { getDatabase, onValue, ref,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
+import { ModalController } from '@ionic/angular';
+import { ModalAlumnosComponent } from '../components/modal-alumnos/modal-alumnos.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -12,14 +15,54 @@ export class Tab1Page implements OnInit {
   infoUser;
   tutorView: boolean;
   maestroView: boolean;
-  constructor() {}
+  alumnosArray: Array<any>;
+  gruposArray: Array<any>;
+  gruposNombre: Array<any> = [];
+  grupoSelected;
+
+  constructor(
+    private modalCtrl: ModalController,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     const auth = getAuth();
     this.uid = auth.currentUser.uid;
     this.getRole();
+    this.getGrupos();
   }
 
+  handleChange(ev: Event) {
+    this.grupoSelected = (ev as CustomEvent).detail.value;
+    this.getAlumnos(this.grupoSelected);
+  }
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalAlumnosComponent,
+    });
+    modal.present();
+  }
+
+  getGrupos(){
+    const db = getDatabase();
+    const usersRef = ref(db, `users/${this.uid}/grupos`);
+    onValue(usersRef, (snapshot) => {
+      this.gruposNombre = [];
+      this.gruposArray = snapshot.val();
+      Object.keys(this.gruposArray).forEach(key => {
+        this.gruposNombre.push(this.gruposArray[key].nombre);
+      });
+    });
+  }
+
+  getAlumnos(grupo){
+    const db = getDatabase();
+    const usersRef = ref(db, `users/${this.uid}/grupos/${grupo}/alumnos`);
+    onValue(usersRef, (snapshot) => {
+      this.alumnosArray = snapshot.val();
+    });
+  }
 
   getRole(){
     const db = getDatabase();
@@ -29,7 +72,6 @@ export class Tab1Page implements OnInit {
       if (snapshot.exists()) {
         this.infoUser = snapshot.val();
         this.role = this.infoUser.rol;
-        console.log(this.infoUser, this.role);
         if(this.role === 'tutor'){
           this.tutorView = true;
         }
@@ -40,6 +82,10 @@ export class Tab1Page implements OnInit {
         console.log("No data available");
       }
     });
+  }
+
+  goToInfo(grupo, nombre){
+    this.router.navigate(['/data-alumno'], { queryParams: { grupo: grupo, nombre:nombre } });
   }
 
 }

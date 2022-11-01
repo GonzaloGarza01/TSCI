@@ -1,0 +1,47 @@
+ion-icon{
+    width: 1.2rem;
+    height: 1.1rem;      
+    margin-right: 0.4rem;
+    margin-top: 0.2rem;
+    color: rgb(34, 34, 34);
+    margin: none;
+}
+ion-label{
+    display: flex;
+    color: rgb(34, 34, 34);
+    margin-top: 5px;
+    margin-bottom: 0rem;
+    height: 50px;
+}
+.footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 5%;
+    text-align: center;
+}
+ion-button{
+    width: 50% ;
+    max-width: 500px;
+}
+.about{
+    margin-top: 50px;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+}
+img{
+    height: auto;
+    width: 50px;
+}
+.header{
+    margin-top: 20px;
+}
+ion-content{
+    --ion-background-color:#f5f5f5;
+}
+ion-item{
+    --ion-background-color:#ffffff;
+    padding-left: 5%;
+    padding-right: 5%;
+}
