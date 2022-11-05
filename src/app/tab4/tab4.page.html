@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Asignaciones</ion-title>
+   <ion-icon (click)="openModalAbout()" style="font-size: 25px; padding-right: 15px;" slot="end" name="help-circle"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -19,7 +20,7 @@
 
   <div class="container selected-container" id="tareas-container">
     <ion-list *ngIf="!filtro">
-      <div class="aviso_item" lines="full" *ngFor="let item of tareasActivas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+      <div appTap (doubleTap)="onPress($event, item.value.id)" (tap)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasActivas | keyvalue" >
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>
@@ -30,7 +31,7 @@
     </ion-list>
 
     <ion-list *ngIf="filtro">
-      <div class="aviso_item" lines="full" *ngFor="let item of tareasGrupoActivas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+      <div appTap (doubleTap)="onPress($event, item.value.id)" (tap)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasGrupoActivas | keyvalue" >
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>
@@ -44,7 +45,7 @@
 
   <div class="container" id="calif-container">
     <ion-list *ngIf="!filtro">
-      <div class="aviso_item" lines="full" *ngFor="let item of tareasFinalizadas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+      <div appTap (doubleTap)="onPress($event, item.value.id)" (tap)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasFinalizadas | keyvalue" >
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>
@@ -55,7 +56,7 @@
     </ion-list>
 
     <ion-list *ngIf="filtro">
-      <div class="aviso_item" lines="full" *ngFor="let item of tareasGrupoFinalizadas | keyvalue" (click)="goToInfo(item.value.grupo, item.value.id)">
+      <div appTap (doubleTap)="onPress($event, item.value.id)" (tap)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasGrupoFinalizadas | keyvalue" >
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { getDatabase, onValue, ref,  } from 'firebase/database';
+import { getDatabase, onValue, ref, remove,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ModalTareasComponent } from '../components/modal-tareas/modal-tareas.component';
+import { ModalAboutComponent } from '../components/modal-about/modal-about.component';
 
 @Component({
   selector: 'app-tab4',
@@ -21,6 +22,9 @@ export class Tab4Page implements OnInit {
   tareasArr: any = {};
   gruposArray: Array<any>;
   filtro: boolean;
+  itemSelectedValue: boolean;
+  itemSessionsTS = [];
+
 
   allArrays: any = {};
   tareasActivas: Array<any>;
@@ -33,7 +37,8 @@ export class Tab4Page implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private router: Router,
-
+    public atrCtrl: AlertController,
+    private toastController: ToastController,
   ) { }
 
   ngOnInit() {
@@ -42,6 +47,38 @@ export class Tab4Page implements OnInit {
     this.getRole();
     this.getAllTareas();
     this.getGrupos();
+  }
+
+  async openModalAbout() {
+    const modal = await this.modalCtrl.create({
+      component: ModalAboutComponent,
+    });
+    modal.present();
+  }
+
+  async onPress(event, id){
+    if(this.maestroView){
+      const alertConfirm = await this.atrCtrl.create({
+        message: '¿Desea eliminar esta tarea?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+          },
+          {
+            text: 'Confirmar',
+            handler: () => {
+              const db = getDatabase();
+              remove(ref(db, `users/${this.uid}/tareas/${id}`));
+              //Dirigir a tareas
+              this.router.navigate(['tabs/asignaciones']);
+              this.presentToast('Tarea eliminada');
+            }
+          }
+        ]
+      });
+      (await alertConfirm).present();  
+    }
   }
 
   //Traer las tareas
@@ -125,9 +162,6 @@ export class Tab4Page implements OnInit {
     } else this.getTareas(this.grupoSelected);
   }
 
-
-
-
   //Navegación
   goToInfo(grupo, id){
     this.router.navigate(['/data-tarea'], { queryParams: { grupo: grupo, id :id } });
@@ -191,4 +225,11 @@ export class Tab4Page implements OnInit {
 
   }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1000
+    });
+    toast.present();
+  }
 }

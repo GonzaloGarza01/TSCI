@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { getDatabase, onValue, ref,  } from 'firebase/database';
+import { getDatabase, onValue, ref, remove,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { ModalAlumnosComponent } from '../components/modal-alumnos/modal-alumnos.component';
 import { Router } from '@angular/router';
+import { ModalAboutComponent } from '../components/modal-about/modal-about.component';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -23,6 +24,8 @@ export class Tab1Page implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private router: Router,
+    public atrCtrl: AlertController,
+    private toastController: ToastController,
   ) {}
 
   ngOnInit() {
@@ -42,6 +45,37 @@ export class Tab1Page implements OnInit {
       component: ModalAlumnosComponent,
     });
     modal.present();
+  }
+
+  async openModalAbout() {
+    const modal = await this.modalCtrl.create({
+      component: ModalAboutComponent,
+    });
+    modal.present();
+  }
+
+  async onPress(grupo, nombre){
+    if(this.maestroView){
+      const alertConfirm = await this.atrCtrl.create({
+        message: '¿Desea eliminar este alumno?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+          },
+          {
+            text: 'Confirmar',
+            handler: () => {
+              const db = getDatabase();
+              remove(ref(db, `users/${this.uid}/grupos/${grupo}/alumnos/${nombre}`));
+              //Dirigir a tareas
+              this.presentToast('Alumno eliminado');
+            }
+          }
+        ]
+      });
+      (await alertConfirm).present();  
+    }
   }
 
   getGrupos(){
@@ -86,6 +120,14 @@ export class Tab1Page implements OnInit {
 
   goToInfo(grupo, nombre){
     this.router.navigate(['/data-alumno'], { queryParams: { grupo: grupo, nombre:nombre } });
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1000
+    });
+    toast.present();
   }
 
 }

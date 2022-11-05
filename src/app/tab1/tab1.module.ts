@@ -6,13 +6,15 @@ import { Tab1Page } from './tab1.page';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { ModalAlumnosComponent } from '../components/modal-alumnos/modal-alumnos.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
+    DirectivesModule
   ],
   declarations: [Tab1Page, ModalAlumnosComponent]
 })
