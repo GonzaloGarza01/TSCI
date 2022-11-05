@@ -3,6 +3,7 @@
     <ion-title>
       Alumnos
     </ion-title>
+   <ion-icon (click)="openModalAbout()" style="font-size: 25px; padding-right: 15px;" slot="end" name="help-circle"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +14,7 @@
     </ion-select>   
   </div>
   <ion-list>
-    <ion-item  lines="full" *ngFor="let item of alumnosArray | keyvalue" (click)="goToInfo(item.value.grupo, item.value.nombre)">
+    <ion-item appTap (doubleTap)="onPress(item.value.grupo, item.value.nombre)" (tap)="goToInfo(item.value.grupo, item.value.nombre)" lines="full" *ngFor="let item of alumnosArray | keyvalue">
       <ion-avatar slot="start">
         <img src="https://cdn.discordapp.com/attachments/522699340771360773/971273566857359420/Logro4.png">
       </ion-avatar>

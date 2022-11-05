@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
 import { getAuth } from "firebase/auth";
-import { getDatabase, onValue, ref,  } from 'firebase/database';
+import { getDatabase, onValue, ref, remove,  } from 'firebase/database';
 
 @Component({
   selector: 'app-data-alumno',
@@ -16,6 +17,9 @@ export class DataAlumnoPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    public atrCtrl: AlertController,
+    private router: Router,
+    private toastController: ToastController,
   ) { }
 
   ngOnInit() {
@@ -37,6 +41,37 @@ export class DataAlumnoPage implements OnInit {
         console.log("No data available");
       }
     });
+  }
+
+  async eliminarAlumno(){
+    const alertConfirm = await this.atrCtrl.create({
+      message: '¿Esta seguro que desea eliminar el alumno?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            const db = getDatabase();
+            remove(ref(db, `users/${this.uid}/grupos/${this.info.params.grupo}/alumnos/${this.info.params.nombre}`));
+            //Dirigir a tareas
+            this.router.navigate(['tabs/alumnos']);
+            this.presentToast('Alumno eliminado');
+          }
+        }
+      ]
+    });
+    (await alertConfirm).present();  
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1000
+    });
+    toast.present();
   }
 
 }

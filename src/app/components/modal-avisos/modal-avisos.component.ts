@@ -30,6 +30,7 @@ export class ModalAvisosComponent implements OnInit {
         set(ref(db, 'avisos/' + id), {
           titulo: this.aviso.title,
           descripcion: this.aviso.body,
+          id: id
         })
         .then(()=>{
           this.presentToast('Aviso registrado');
