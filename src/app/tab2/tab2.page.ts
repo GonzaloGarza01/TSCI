@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { child, get, getDatabase, onValue, ref, remove,  } from 'firebase/database';
+import { getDatabase, onValue, ref, remove,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { ModalAvisosComponent } from '../components/modal-avisos/modal-avisos.component';
-import { Router } from '@angular/router';
 import { ModalAboutComponent } from '../components/modal-about/modal-about.component';
 @Component({
   selector: 'app-tab2',

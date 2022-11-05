@@ -6,6 +6,7 @@ import { child, get, getDatabase, onValue, ref,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
 import { ModalAboutComponent } from '../components/modal-about/modal-about.component';
 import { ModalController } from '@ionic/angular';
+import { ModalGrupoTutorComponent } from '../components/modal-grupo-tutor/modal-grupo-tutor.component';
 
 @Component({
   selector: 'app-tab3',
@@ -32,6 +33,13 @@ export class Tab3Page implements OnInit {
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: ModalAboutComponent,
+    });
+    modal.present();
+  }
+
+  async openModalGrupo() {
+    const modal = await this.modalCtrl.create({
+      component: ModalGrupoTutorComponent,
     });
     modal.present();
   }

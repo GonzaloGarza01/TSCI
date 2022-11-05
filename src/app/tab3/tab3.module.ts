@@ -6,6 +6,7 @@ import { Tab3Page } from './tab3.page';
 
 import { Tab3PageRoutingModule } from './tab3-routing.module';
 import { ModalAboutComponent } from '../components/modal-about/modal-about.component';
+import { ModalGrupoTutorComponent } from '../components/modal-grupo-tutor/modal-grupo-tutor.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { ModalAboutComponent } from '../components/modal-about/modal-about.compo
     FormsModule,
     Tab3PageRoutingModule
   ],
-  declarations: [Tab3Page, ModalAboutComponent]
+  declarations: [Tab3Page, ModalAboutComponent, ModalGrupoTutorComponent]
 })
 export class Tab3PageModule {}

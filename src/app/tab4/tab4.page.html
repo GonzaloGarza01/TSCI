@@ -11,7 +11,7 @@
     <ion-item id="section-calificaciones"  (click)="calificacionesSection()">Vencidas</ion-item>
   </div>
 
-  <div class="selector">
+  <div *ngIf="maestroView" class="selector">
     <ion-select (ionChange)="handleChange($event)" [(ngModel)]="grupoSelected" interface="popover" placeholder="Filtrar por grupo">
       <ion-select-option  *ngFor="let item of gruposNombre">{{item}}</ion-select-option>
       <ion-select-option>Sin filtro</ion-select-option>
@@ -32,6 +32,17 @@
 
     <ion-list *ngIf="filtro">
       <div appTap (doubleTap)="onPress($event, item.value.id)" (tap)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasGrupoActivas | keyvalue" >
+        <ion-label>
+          {{item.value.nombre}}
+          <p>{{item.value.grupo}}</p>
+          <p>{{item.value.fecha}}</p>
+          <p>{{item.value.descripcion}}</p>
+        </ion-label>
+      </div>
+    </ion-list>
+
+    <ion-list style="padding-top:20px ;" *ngIf="tutorView">
+      <div style="padding-top:20px ;" (click)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasTutorActivas | keyvalue" >
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>
@@ -65,6 +76,18 @@
         </ion-label>
       </div>
     </ion-list>
+
+    <ion-list style="padding-top:20px ;" *ngIf="tutorView">
+      <div style="padding-top:20px ;" (tap)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasTutorVencidas | keyvalue" >
+        <ion-label>
+          {{item.value.nombre}}
+          <p>{{item.value.grupo}}</p>
+          <p>{{item.value.fecha}}</p>
+          <p>{{item.value.descripcion}}</p>
+        </ion-label>
+      </div>
+    </ion-list>
+  
   </div>
   <ion-button *ngIf="maestroView" (click)="openModal()" class="buttonAddSession">+</ion-button>
 </ion-content>

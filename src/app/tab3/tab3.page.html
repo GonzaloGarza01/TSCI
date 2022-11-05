@@ -28,10 +28,17 @@
         <h2>Acerca de</h2>
     </div>
 
-  
-    <div class="footer">
-      <ion-button color="tertiary" type="submit" (click)="logOut()">Cerrar sesión</ion-button>
-    </div>
+    <ion-grid style="margin-top: 300px ;">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="12" class="ion-text-center" align-self-end>
+          <ion-button shape="round" style="margin-bottom: 15px;" color="primary" type="submit" (click)="openModalGrupo()">Cambiar grupo</ion-button>
+        </ion-col>
+        <ion-col size="12" class="ion-text-center">
+          <ion-button fill="outline" color="tertiary" type="submit" (click)="logOut()">Cerrar sesión</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
+    
 
 </ion-content>
