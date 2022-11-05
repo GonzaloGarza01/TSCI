@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { getAuth } from "firebase/auth";
 import { ActivatedRoute, Router } from '@angular/router';
-import { getDatabase, onValue, ref, set, update,  } from 'firebase/database';
+import { getDatabase, onValue, ref, update,  } from 'firebase/database';
 import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
@@ -21,6 +21,12 @@ export class DataTareaPage implements OnInit {
 
   tareaInfo;
 
+  allInfoBD;
+  allInfoMaestros: Array<any>;
+  allInfoTareas: Array<any>;
+  tareasTutorActivas: Array<any>;
+  tareasTutorVencidas: Array<any>;
+
   constructor(
     private route: ActivatedRoute,
     public atrCtrl: AlertController,
@@ -34,8 +40,8 @@ export class DataTareaPage implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       this.info = { ...params.keys, ...params };
     });
-    this.getInfoBD();
     this.getRole();
+    this.getInfoBD();
     this.getEstado();
   }
 
@@ -103,15 +109,56 @@ export class DataTareaPage implements OnInit {
   }
 
   getInfoBD(){
-    const db = getDatabase();
-    const dbRef = ref(db, `users/${this.uid}/tareas/${this.info.params.id}`);
-    onValue(dbRef, (snapshot) => {
-      if (snapshot.exists()) {
-        this.dataTarea = snapshot.val();
-      } else {
-        console.log("No data available");
-      }
-    });
+    if(this.maestroView){
+      const db = getDatabase();
+      const dbRef = ref(db, `users/${this.uid}/tareas/${this.info.params.id}`);
+      onValue(dbRef, (snapshot) => {
+        if (snapshot.exists()) {
+          this.dataTarea = snapshot.val();
+        } else {
+          console.log("No data available");
+        }
+      });
+    }
+    else{
+      const db = getDatabase();
+      const dbRef = ref(db, `users/`);
+      onValue(dbRef, (snapshot) => {
+        if(this.allInfoBD){
+          this.allInfoBD = {}
+        }
+        this.allInfoMaestros = [];
+        this.allInfoTareas = [];
+        this.tareasTutorActivas = [];
+        this.allInfoBD = snapshot.val();
+        if(this.allInfoBD){
+          Object.keys(this.allInfoBD).forEach(key => {
+            if(this.allInfoBD[key].rol === 'maestro'){
+              if(!this.allInfoMaestros[key]){
+                this.allInfoMaestros[key] = this.allInfoBD[key];
+              }
+            }
+          });
+        }
+        if(this.allInfoMaestros){
+          Object.keys(this.allInfoMaestros).forEach(key => {
+            if(this.allInfoMaestros[key].tareas){
+              if(!this.allInfoTareas[key]){
+                this.allInfoTareas = this.allInfoMaestros[key].tareas;
+              }
+            }
+          });
+        }
+        if(this.allInfoTareas){
+          Object.keys(this.allInfoTareas).forEach(key => {
+            if(this.allInfoTareas[key].id === this.info.params.id){
+              this.dataTarea = this.allInfoTareas[key];
+            }
+          });
+        }
+      });    
+    }
+
   }
 
   getRole(){
