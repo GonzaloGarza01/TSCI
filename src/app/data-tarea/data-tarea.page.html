@@ -15,8 +15,14 @@
       <div class="body_sec">
         <ion-label *ngIf="dataTarea.descripcion" class="ion-text"><p>Descripción: </p>{{dataTarea.descripcion}}</ion-label>
         <ion-label *ngIf="dataTarea.grupo" class="ion-text"><p style="margin-top:20px ;">Grupo: </p>{{dataTarea.grupo}}</ion-label>
+        <p style="font-weight:bold; font-size: 15px ;" *ngIf="dataTarea.image" >Imagen:</p>
+      </div>
+      <div *ngIf="dataTarea.image" >
+        <img src="{{dataTarea.image}}">
       </div>
   </div>
+
+
 
   <div class="footer" *ngIf="maestroView">
       <ion-button *ngIf="estado === 'activo'" color="tertiary" (click)="finalizarTarea()"> Finalizar Tarea</ion-button>
