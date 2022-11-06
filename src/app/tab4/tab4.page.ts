@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { getDatabase, onValue, ref,  } from 'firebase/database';
+import { getDatabase, onValue, ref, remove,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ModalTareasComponent } from '../components/modal-tareas/modal-tareas.component';
+import { ModalAboutComponent } from '../components/modal-about/modal-about.component';
+import { ModalGrupoTutorComponent } from '../components/modal-grupo-tutor/modal-grupo-tutor.component';
 
 @Component({
   selector: 'app-tab4',
@@ -21,6 +23,9 @@ export class Tab4Page implements OnInit {
   tareasArr: any = {};
   gruposArray: Array<any>;
   filtro: boolean;
+  itemSelectedValue: boolean;
+  itemSessionsTS = [];
+
 
   allArrays: any = {};
   tareasActivas: Array<any>;
@@ -28,12 +33,17 @@ export class Tab4Page implements OnInit {
   tareasGrupoActivas: Array<any>;
   tareasGrupoFinalizadas: Array<any>;
   
-
+  allInfoBD;
+  allInfoMaestros: Array<any>;
+  allInfoTareas: Array<any>;
+  tareasTutorActivas: Array<any>;
+  tareasTutorVencidas: Array<any>;
 
   constructor(
     private modalCtrl: ModalController,
     private router: Router,
-
+    public atrCtrl: AlertController,
+    private toastController: ToastController,
   ) { }
 
   ngOnInit() {
@@ -42,6 +52,88 @@ export class Tab4Page implements OnInit {
     this.getRole();
     this.getAllTareas();
     this.getGrupos();
+  }
+
+  getGrupoTutor(info){
+    const grupo = info.grupoId;
+    const db = getDatabase();
+    const dbRef = ref(db, `users/`);
+    onValue(dbRef, (snapshot) => {
+      if(this.allInfoBD){
+        this.allInfoBD = {}
+      }
+      this.allInfoMaestros = [];
+      this.allInfoTareas = [];
+      this.tareasTutorActivas = [];
+      this.tareasTutorVencidas = [];
+      this.allInfoBD = snapshot.val();
+      if(this.allInfoBD){
+        Object.keys(this.allInfoBD).forEach(key => {
+          if(this.allInfoBD[key].rol === 'maestro'){
+            if(!this.allInfoMaestros[key]){
+              this.allInfoMaestros[key] = this.allInfoBD[key];
+            }
+          }
+        });
+      }
+      if(this.allInfoMaestros){
+        Object.keys(this.allInfoMaestros).forEach(key => {
+          if(this.allInfoMaestros[key].tareas){
+            if(!this.allInfoTareas[key]){
+              this.allInfoTareas = this.allInfoMaestros[key].tareas;
+            }
+          }
+        });
+      }
+      if(this.allInfoTareas){
+        Object.keys(this.allInfoTareas).forEach(key => {
+          if(this.allInfoTareas[key].grupo === grupo){
+            if(this.allInfoTareas[key].estado === 'activo'){
+              if(!this.tareasTutorActivas[key]){
+                this.tareasTutorActivas[key] = this.allInfoTareas[key]
+              }
+            } 
+            else{
+              if(!this.tareasTutorVencidas[key]){
+                this.tareasTutorVencidas[key] = this.allInfoTareas[key]
+              }
+            }
+          }
+        });
+      }
+    });
+  }
+
+  async openModalAbout() {
+    const modal = await this.modalCtrl.create({
+      component: ModalAboutComponent,
+    });
+    modal.present();
+  }
+
+  async onPress(event, id){
+    if(this.maestroView){
+      const alertConfirm = await this.atrCtrl.create({
+        message: '¿Desea eliminar esta tarea?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+          },
+          {
+            text: 'Confirmar',
+            handler: () => {
+              const db = getDatabase();
+              remove(ref(db, `users/${this.uid}/tareas/${id}`));
+              //Dirigir a tareas
+              this.router.navigate(['tabs/asignaciones']);
+              this.presentToast('Tarea eliminada');
+            }
+          }
+        ]
+      });
+      (await alertConfirm).present();  
+    }
   }
 
   //Traer las tareas
@@ -72,36 +164,44 @@ export class Tab4Page implements OnInit {
     });
   }
 
-    //Traer las tareas de la BD con filtro
-    getTareas(grupo){
-      this.filtro = true;
-      const db = getDatabase();
-      const usersRef = ref(db, `users/${this.uid}/tareas`);
-      onValue(usersRef, (snapshot) => {
-        if(this.tareasArr){
-          this.tareasArr = {}
-        }
-        this.tareasGrupoActivas = [];
-        this.tareasGrupoFinalizadas = [];
-        this.tareasArr = snapshot.val();
-        if(this.tareasArr){
-          Object.keys(this.tareasArr).forEach(key => {
-            if(this.tareasArr[key].grupo === grupo){
-              if(this.allArrays.allTareas[key].estado === 'activo'){
-                if(!this.tareasGrupoActivas[key]){
-                  this.tareasGrupoActivas[key] = this.tareasArr[key];
-                }
-              }
-              else{
-                if(!this.tareasGrupoFinalizadas[key]){
-                  this.tareasGrupoFinalizadas[key] = this.tareasArr[key];
-                }
+  //Filtrar por grupo
+  handleChange(ev: Event) {
+    this.grupoSelected = (ev as CustomEvent).detail.value;
+    if(this.grupoSelected == "Sin filtro"){
+      this.filtro = false;
+    } else this.getTareas(this.grupoSelected);
+  }
+
+  //Traer las tareas de la BD con filtro
+  getTareas(grupo){
+    this.filtro = true;
+    const db = getDatabase();
+    const usersRef = ref(db, `users/${this.uid}/tareas`);
+    onValue(usersRef, (snapshot) => {
+      if(this.tareasArr){
+        this.tareasArr = {}
+      }
+      this.tareasGrupoActivas = [];
+      this.tareasGrupoFinalizadas = [];
+      this.tareasArr = snapshot.val();
+      if(this.tareasArr){
+        Object.keys(this.tareasArr).forEach(key => {
+          if(this.tareasArr[key].grupo === grupo){
+            if(this.allArrays.allTareas[key].estado === 'activo'){
+              if(!this.tareasGrupoActivas[key]){
+                this.tareasGrupoActivas[key] = this.tareasArr[key];
               }
             }
-          });
-        }
-      });
-    }
+            else{
+              if(!this.tareasGrupoFinalizadas[key]){
+                this.tareasGrupoFinalizadas[key] = this.tareasArr[key];
+              }
+            }
+          }
+        });
+      }
+    });
+  }
 
   
   //Traer los grupos de la BD
@@ -116,17 +216,6 @@ export class Tab4Page implements OnInit {
       });
     });
   }
-
-  //Filtrar por grupo
-  handleChange(ev: Event) {
-    this.grupoSelected = (ev as CustomEvent).detail.value;
-    if(this.grupoSelected == "Sin filtro"){
-      this.filtro = false;
-    } else this.getTareas(this.grupoSelected);
-  }
-
-
-
 
   //Navegación
   goToInfo(grupo, id){
@@ -144,6 +233,12 @@ export class Tab4Page implements OnInit {
         this.role = this.infoUser.rol;
         if(this.role === 'tutor'){
           this.tutorView = true;
+          if(!this.infoUser.grupoId){
+            this.openModalGrupo();
+          }
+          else{
+            this.getGrupoTutor(this.infoUser);
+          }
         }
         else{
           this.maestroView = true;
@@ -154,6 +249,13 @@ export class Tab4Page implements OnInit {
     });
   }
   
+  async openModalGrupo() {
+    const modal = await this.modalCtrl.create({
+      component: ModalGrupoTutorComponent,
+    });
+    modal.present();
+  }
+
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: ModalTareasComponent,
@@ -191,4 +293,11 @@ export class Tab4Page implements OnInit {
 
   }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1000
+    });
+    toast.present();
+  }
 }

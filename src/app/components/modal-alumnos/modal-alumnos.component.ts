@@ -39,33 +39,33 @@ export class ModalAlumnosComponent implements OnInit {
     });
   }
 
-  async tareasSection(){
-    const tareas = document.querySelector('#section-tareas');
-    const calif = document.querySelector('#section-calificaciones');
+  async grupoSection(){
+    const grupo = document.querySelector('#section-grupo');
+    const alumno = document.querySelector('#section-alumno');
 
-    tareas.classList.add('selected');
-    calif.classList.remove('selected');
+    grupo.classList.add('selected');
+    alumno.classList.remove('selected');
 
-    const tSection = document.querySelector('#tareas-container');
-    const cSection = document.querySelector('#calif-container');
+    const gSection = document.querySelector('#grupo-container');
+    const aSection = document.querySelector('#alumno-container');
 
-    tSection.classList.add('selected-container');
-    cSection.classList.remove('selected-container');
+    gSection.classList.add('selected-container');
+    aSection.classList.remove('selected-container');
 
   }
 
-  async calificacionesSection(){
-    const tareas = document.querySelector('#section-tareas');
-    const calif = document.querySelector('#section-calificaciones');
+  async alumnoSection(){
+    const grupo = document.querySelector('#section-grupo');
+    const alumno = document.querySelector('#section-alumno');
 
-    tareas.classList.remove('selected');
-    calif.classList.add('selected');
+    grupo.classList.remove('selected');
+    alumno.classList.add('selected');
 
-    const tSection = document.querySelector('#tareas-container');
-    const cSection = document.querySelector('#calif-container');
+    const gSection = document.querySelector('#grupo-container');
+    const aSection = document.querySelector('#alumno-container');
 
-    tSection.classList.remove('selected-container');
-    cSection.classList.add('selected-container');
+    gSection.classList.remove('selected-container');
+    aSection.classList.add('selected-container');
 
   }
   

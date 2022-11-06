@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Selección de grupo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="selectBook">
+    <ion-text>Seleccione el grupo al que pertenece el alumno: </ion-text>
+    <ion-item>
+      <ion-select [(ngModel)]="grupo" interface="popover">
+        <ion-select-option  *ngFor="let item of gruposNombre" value="{{item}}">{{item}}</ion-select-option>
+      </ion-select> 
+    </ion-item>
+  </div>
+  <div class="btn">
+    <a (click)="dismissModal()">Cancelar</a>
+    <ion-button type="submit" (click)="onSave()" >Seleccionar grupo</ion-button>
+  </div>
+</ion-content>

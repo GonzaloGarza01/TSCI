@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { child, get, getDatabase, onValue, ref,  } from 'firebase/database';
+import { getDatabase, onValue, ref, remove,  } from 'firebase/database';
 import { getAuth } from "firebase/auth";
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { ModalAvisosComponent } from '../components/modal-avisos/modal-avisos.component';
+import { ModalAboutComponent } from '../components/modal-about/modal-about.component';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -18,7 +19,9 @@ export class Tab2Page implements OnInit {
 
 
   constructor(
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public atrCtrl: AlertController,
+    private toastController: ToastController,
   ) {}
   
   ngOnInit() {
@@ -36,6 +39,35 @@ export class Tab2Page implements OnInit {
     });
   }
 
+  async openModalAbout() {
+    const modal = await this.modalCtrl.create({
+      component: ModalAboutComponent,
+    });
+    modal.present();
+  }
+
+  async eliminarAviso(id){
+    if(this.maestroView){
+      const alertConfirm = await this.atrCtrl.create({
+        message: '¿Desea eliminar este aviso?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+          },
+          {
+            text: 'Confirmar',
+            handler: () => {
+              const db = getDatabase();
+              remove(ref(db, `avisos/${id}`));
+              this.presentToast('Aviso eliminado');
+            }
+          }
+        ]
+      });
+      (await alertConfirm).present();  
+    }
+  }
 
 
   async openModal() {
@@ -63,6 +95,14 @@ export class Tab2Page implements OnInit {
         console.log("No data available");
       }
     });
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1000
+    });
+    toast.present();
   }
 
 }

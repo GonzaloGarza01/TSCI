@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { getDatabase, push, ref, set, onValue } from 'firebase/database';
+import { getDatabase, push, ref, set, onValue, update } from 'firebase/database';
 import { getAuth } from "firebase/auth";
+import { StorageserviceService } from 'src/app/services/Storage/storage-service.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-modal-tareas',
@@ -14,11 +16,13 @@ export class ModalTareasComponent implements OnInit {
   uid;
   gruposNombre: Array<any> = [];
   gruposArray: Array<any>;
-
-
+  tareaImg;
+  event;
   constructor(
     private modalController: ModalController,
     private toastController: ToastController,
+    private storageService: StorageserviceService,
+    public angularFireAuth: AngularFireAuth,
   ) { }
 
   ngOnInit() {
@@ -63,6 +67,22 @@ export class ModalTareasComponent implements OnInit {
           this.tareas.fecha = ''
           this.dismissModal();
         });
+        if(this.tareas.img){
+          const files = this.event.target.files;
+          const reader = new FileReader();
+          reader.readAsDataURL(files[0]);
+          reader.onloadend = () => {
+            console.log(reader.result);
+            this.tareaImg = reader.result;
+            this.storageService.uploadImage(this.uid, id, reader.result).then(urlImg=>{
+              this.tareaImg = urlImg;
+              const db = getDatabase();
+              update(ref(db, `users/${this.uid}/tareas/${id}`), {
+                image: urlImg
+              });
+            });
+          };
+        }
       }
       else{
         console.log("No existe informacion")
@@ -70,6 +90,10 @@ export class ModalTareasComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  saveImage(event){
+    this.event = event;
   }
 
   dismissModal() {

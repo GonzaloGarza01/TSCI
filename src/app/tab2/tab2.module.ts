@@ -7,13 +7,15 @@ import { Tab2Page } from './tab2.page';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { ModalAvisosComponent } from '../components/modal-avisos/modal-avisos.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    Tab2PageRoutingModule
+    Tab2PageRoutingModule,
+    DirectivesModule
   ],
   declarations: [Tab2Page, ModalAvisosComponent]
 })
