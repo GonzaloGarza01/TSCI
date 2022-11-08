@@ -27,6 +27,8 @@ export class DataTareaPage implements OnInit {
   tareasTutorActivas: Array<any>;
   tareasTutorVencidas: Array<any>;
 
+  imageExists: boolean;
+
   constructor(
     private route: ActivatedRoute,
     public atrCtrl: AlertController,
@@ -158,7 +160,9 @@ export class DataTareaPage implements OnInit {
         }
       });    
     }
-
+    if(this.dataTarea.image){
+      this.imageExists = true;
+    }
   }
 
   getRole(){
