@@ -7,5 +7,13 @@ export const environment = {
     authDomain: 'tsci-aprende.firebaseapp.com',
     messagingSenderId: '4641594364',
   },
-  production: true
+  production: true,
+  firebaseConfig : {
+    apiKey: "AIzaSyCeR3-5Q2AK1FVcBq4011dFKQIYFxL2Tzs",
+    authDomain: "tsci-aprende.firebaseapp.com",
+    projectId: "tsci-aprende",
+    storageBucket: "tsci-aprende.appspot.com",
+    messagingSenderId: "4641594364",
+    appId: "1:4641594364:web:c1932c3554d82bd2cab079"
+  },
 };
