@@ -3,13 +3,28 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/asignaciones"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="dataTarea.nombre" >{{dataTarea.nombre}}</ion-title>
+    <!-- <ion-title *ngIf="dataTarea.nombre" >{{dataTarea.nombre}}</ion-title> -->
+
+    <div slot="end" class="popover">
+      <ion-button size="large" fill="clear" id="popover-button"><ion-icon name="ellipsis-vertical-circle-outline"></ion-icon></ion-button>
+      <ion-popover trigger="popover-button" [dismissOnSelect]="true">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item (click)="editTarea(dataTarea)" [button]="true" [detail]="false">Editar</ion-item>
+              <ion-item (click)="deleteTarea()" [button]="true" [detail]="false">Eliminar</ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+    </div>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="main">
-      <div class="header_sec">
+    <div class="header_sec">
         <ion-label style="font-size:large; font-weight:bold;" *ngIf="dataTarea.nombre" class="ion-text">{{dataTarea.nombre}}</ion-label>
         <p *ngIf="dataTarea.fecha">Fecha vencimiento {{dataTarea.fecha}}</p>
       </div>
