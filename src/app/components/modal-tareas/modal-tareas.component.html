@@ -16,7 +16,7 @@
           <ion-text>Nombre de la tarea</ion-text>
           <ion-item>
             <ion-input type="text"
-            [(ngModel)]="tareas.name"
+            [(ngModel)]="tareas.nombre"
             required class="register_input"
           ></ion-input>
           </ion-item>
@@ -57,7 +57,7 @@
         <!-- Imagen -->
         <div class="select">
           <ion-text>Agregar Imagen (opcional):</ion-text>
-          <input [(ngModel)]="tareas.img" style="padding-top:20px ;" type="file" accept=".jpg, .png" (change)="saveImage($event)"  id="inputFile"/>
+          <input [(ngModel)]="tareas.image" style="padding-top:20px ;" type="file" accept=".jpg, .png" (change)="saveImage($event)"  id="inputFile"/>
         </div>        
 
         <div class="btn">

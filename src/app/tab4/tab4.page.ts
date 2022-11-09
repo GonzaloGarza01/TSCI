@@ -126,7 +126,6 @@ export class Tab4Page implements OnInit {
               const db = getDatabase();
               remove(ref(db, `users/${this.uid}/tareas/${id}`));
               //Dirigir a tareas
-              this.router.navigate(['tabs/asignaciones']);
               this.presentToast('Tarea eliminada');
             }
           }

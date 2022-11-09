@@ -18,6 +18,7 @@ export class ModalTareasComponent implements OnInit {
   gruposArray: Array<any>;
   tareaImg;
   event;
+
   constructor(
     private modalController: ModalController,
     private toastController: ToastController,
@@ -49,40 +50,74 @@ export class ModalTareasComponent implements OnInit {
       const usersRef = ref(db, 'users/' + this.uid + '/grupos/')
       const pushData = push(usersRef)
       const id  = pushData.key;
-      if(this.tareas.name && this.tareas.descripcion && this.tareas.grupo && this.tareas.fecha){
+      if(this.tareas.nombre && this.tareas.descripcion && this.tareas.grupo && this.tareas.fecha){
         const db = getDatabase();
-        set(ref(db, `users/${this.uid}/tareas/${id}`), {
-          nombre: this.tareas.name,
-          descripcion: this.tareas.descripcion,
-          grupo: this.tareas.grupo,
-          fecha: this.tareas.fecha,
-          id: id,
-          estado: 'activo'
-        })
-        .then(()=>{
-          this.presentToast('Tarea registrada');
-          this.tareas.name = '',
-          this.tareas.descripcion = '',
-          this.tareas.grupo = '',
-          this.tareas.fecha = ''
-          this.dismissModal();
-        });
-        if(this.tareas.img){
-          const files = this.event.target.files;
-          const reader = new FileReader();
-          reader.readAsDataURL(files[0]);
-          reader.onloadend = () => {
-            console.log(reader.result);
-            this.tareaImg = reader.result;
-            this.storageService.uploadImage(this.uid, id, reader.result).then(urlImg=>{
-              this.tareaImg = urlImg;
-              const db = getDatabase();
-              update(ref(db, `users/${this.uid}/tareas/${id}`), {
-                image: urlImg
+        if(this.tareas.id){
+          update(ref(db, `users/${this.uid}/tareas/${this.tareas.id}`), {
+            nombre: this.tareas.nombre,
+            descripcion: this.tareas.descripcion,
+            grupo: this.tareas.grupo,
+            fecha: this.tareas.fecha,
+            estado: 'activo'
+          })
+          .then(()=>{
+            this.presentToast('Tarea actualizada');
+            this.tareas.nombre = '',
+            this.tareas.descripcion = '',
+            this.tareas.grupo = '',
+            this.tareas.fecha = ''
+            this.dismissModal();
+          });
+          if(this.tareas.image){
+            const files = this.event.target.files;
+            const reader = new FileReader();
+            reader.readAsDataURL(files[0]);
+            reader.onloadend = () => {
+              this.tareaImg = reader.result;
+              this.storageService.uploadImage(this.uid, id, reader.result).then(urlImg=>{
+                this.tareaImg = urlImg;
+                const db = getDatabase();
+                update(ref(db, `users/${this.uid}/tareas/${this.tareas.id}`), {
+                  image: urlImg
+                });
               });
-            });
-          };
+            };
+          }
         }
+        else{
+          update(ref(db, `users/${this.uid}/tareas/${id}`), {
+            nombre: this.tareas.nombre,
+            descripcion: this.tareas.descripcion,
+            grupo: this.tareas.grupo,
+            fecha: this.tareas.fecha,
+            id: id,
+            estado: 'activo'
+          })
+          .then(()=>{
+            this.presentToast('Tarea registrada');
+            this.tareas.nombre = '',
+            this.tareas.descripcion = '',
+            this.tareas.grupo = '',
+            this.tareas.fecha = ''
+            this.dismissModal();
+          });
+          if(this.tareas.image){
+            const files = this.event.target.files;
+            const reader = new FileReader();
+            reader.readAsDataURL(files[0]);
+            reader.onloadend = () => {
+              this.tareaImg = reader.result;
+              this.storageService.uploadImage(this.uid, id, reader.result).then(urlImg=>{
+                this.tareaImg = urlImg;
+                const db = getDatabase();
+                update(ref(db, `users/${this.uid}/tareas/${id}`), {
+                  image: urlImg
+                });
+              });
+            };
+          }
+        }
+
       }
       else{
         console.log("No existe informacion")
