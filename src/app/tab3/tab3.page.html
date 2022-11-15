@@ -21,6 +21,10 @@
         <!-- <ion-icon name="person"></ion-icon><ion-label style="font-weight:bold;">Rol:</ion-label> -->
         <ion-icon name="person"></ion-icon><ion-label *ngIf="dataUser.email" class="ion-text"><p>Rol: </p>{{dataUser.rol}}</ion-label>
       </ion-item>
+      <ion-item>
+        <!-- <ion-icon name="person"></ion-icon><ion-label style="font-weight:bold;">Rol:</ion-label> -->
+        <ion-icon name="business-outline"></ion-icon><ion-label *ngIf="dataUser.grupoId" class="ion-text"><p>Grupo: </p>{{dataUser.grupoId}}</ion-label>
+      </ion-item>
     </div>
   
     <div class="about" (click)="openModal()">

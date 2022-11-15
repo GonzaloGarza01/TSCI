@@ -10,7 +10,7 @@
 <ion-content>
   <div class="container selected-container">
     <ion-list>
-      <div appTap (doubleTap)="eliminarAviso(item.value.id)"  class="aviso_item" *ngFor="let item of avisosArray | keyvalue">
+      <div appTap (doubleTap)="eliminarAviso(item.value.titulo, item.value.id)"  class="aviso_item" *ngFor="let item of avisosArray | keyvalue">
         <div class="img_side" style="padding-right:20px ;">
           <ion-avatar slot="start">
             <img src="https://cdn.discordapp.com/attachments/522699340771360773/1033219923218018304/aviso3.png">

@@ -46,10 +46,10 @@ export class Tab2Page implements OnInit {
     modal.present();
   }
 
-  async eliminarAviso(id){
+  async eliminarAviso(nombre, id){
     if(this.maestroView){
       const alertConfirm = await this.atrCtrl.create({
-        message: '¿Desea eliminar este aviso?',
+        message: `¿Desea eliminar el aviso ${nombre}?`,
         buttons: [
           {
             text: 'Cancelar',

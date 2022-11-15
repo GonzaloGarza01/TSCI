@@ -13,12 +13,13 @@
       <ion-item id="section-alumno"  (click)="alumnoSection()">Agregar alumno</ion-item>
     </div>
   
-    <div class="container selected-container" id="grupo-container">
+    <div class="container" id="grupo-container">
       <div class="form-input">
         <div class="select">
           <ion-text>Nombre del Grupo</ion-text>
           <ion-item>
             <ion-input type="text"
+            placeholder="Ej. '1A'"
             [(ngModel)]="grupos.name"
             required class="register_input"
           ></ion-input>
@@ -31,14 +32,14 @@
       </div>
     </div>
   
-    <div class="container" id="alumno-container">
+    <div class="container selected-container" id="alumno-container">
       <div class="form-input">
         <div class="select">
           <ion-text>Nombre del alumno</ion-text>
           <ion-item>
             <ion-input type="text"
             placeholder="Ingrese el nombre"
-            [(ngModel)]="alumnos.name"
+            [(ngModel)]="alumnos.nombre"
             required class="register_input"
           ></ion-input>
           </ion-item>
@@ -66,7 +67,7 @@
           <ion-item>
             <ion-input type="tel"
             placeholder="888-888-8888"
-            [(ngModel)]="alumnos.number"
+            [(ngModel)]="alumnos.contacto"
             required class="register_input"
           ></ion-input>
           </ion-item>
@@ -75,8 +76,9 @@
           <ion-text>Comentarios adicionales</ion-text>
           <ion-item>
             <ion-input type="text"
-            [(ngModel)]="alumnos.extra"
-            required class="register_input"
+            placeholder="Opcional"
+            [(ngModel)]="alumnos.comentarios"
+            class="register_input"
           ></ion-input>
           </ion-item>
         </div>
