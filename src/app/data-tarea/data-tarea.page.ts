@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { getAuth } from "firebase/auth";
 import { ActivatedRoute, Router } from '@angular/router';
-import { getDatabase, onValue, ref, update,  } from 'firebase/database';
-import { AlertController, ToastController } from '@ionic/angular';
+import { getDatabase, onValue, ref, remove, update,  } from 'firebase/database';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { ModalTareasComponent } from '../components/modal-tareas/modal-tareas.component';
 
 @Component({
   selector: 'app-data-tarea',
@@ -27,10 +28,13 @@ export class DataTareaPage implements OnInit {
   tareasTutorActivas: Array<any>;
   tareasTutorVencidas: Array<any>;
 
+  imageExists: boolean;
+
   constructor(
     private route: ActivatedRoute,
     public atrCtrl: AlertController,
     private router: Router,
+    private modalCtrl: ModalController,
     private toastController: ToastController,
   ) { }
 
@@ -41,9 +45,40 @@ export class DataTareaPage implements OnInit {
       this.info = { ...params.keys, ...params };
     });
     this.getRole();
-    this.getInfoBD();
     this.getEstado();
   }
+
+  async editTarea(tareas){
+    const modal = await this.modalCtrl.create({
+      component: ModalTareasComponent,
+      componentProps: {
+        tareas: tareas
+      }
+    });
+    modal.present();  
+  }
+
+  async deleteTarea(){
+    const alertConfirm = await this.atrCtrl.create({
+      message: '¿Desea eliminar esta tarea?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            const db = getDatabase();
+            remove(ref(db, `users/${this.uid}/tareas/${this.dataTarea.id}`));
+            //Dirigir a tareas
+            this.router.navigate(['tabs/asignaciones']);
+            this.presentToast('Tarea eliminada');
+          }
+        }
+      ]
+    });
+    (await alertConfirm).present();    }
 
   getEstado(){
     const db = getDatabase();
@@ -100,7 +135,7 @@ export class DataTareaPage implements OnInit {
             });
             //Dirigir a tareas
             this.router.navigate(['tabs/asignaciones']);
-            this.presentToast('Tarea finalizada');
+            this.presentToast('Tarea activada');
           }
         }
       ]
@@ -108,57 +143,61 @@ export class DataTareaPage implements OnInit {
     (await alertConfirm).present();
   }
 
-  getInfoBD(){
-    if(this.maestroView){
-      const db = getDatabase();
+   getInfoBDMaestro(){
+    this.dataTarea = {}
+    const db = getDatabase();
       const dbRef = ref(db, `users/${this.uid}/tareas/${this.info.params.id}`);
       onValue(dbRef, (snapshot) => {
         if (snapshot.exists()) {
-          this.dataTarea = snapshot.val();
-        } else {
-          console.log("No data available");
+          this.dataTarea = snapshot.val();          
         }
-      });
-    }
-    else{
-      const db = getDatabase();
-      const dbRef = ref(db, `users/`);
-      onValue(dbRef, (snapshot) => {
-        if(this.allInfoBD){
-          this.allInfoBD = {}
-        }
-        this.allInfoMaestros = [];
-        this.allInfoTareas = [];
-        this.tareasTutorActivas = [];
-        this.allInfoBD = snapshot.val();
-        if(this.allInfoBD){
-          Object.keys(this.allInfoBD).forEach(key => {
-            if(this.allInfoBD[key].rol === 'maestro'){
-              if(!this.allInfoMaestros[key]){
-                this.allInfoMaestros[key] = this.allInfoBD[key];
-              }
-            }
-          });
-        }
-        if(this.allInfoMaestros){
-          Object.keys(this.allInfoMaestros).forEach(key => {
-            if(this.allInfoMaestros[key].tareas){
-              if(!this.allInfoTareas[key]){
-                this.allInfoTareas = this.allInfoMaestros[key].tareas;
-              }
-            }
-          });
-        }
-        if(this.allInfoTareas){
-          Object.keys(this.allInfoTareas).forEach(key => {
-            if(this.allInfoTareas[key].id === this.info.params.id){
-              this.dataTarea = this.allInfoTareas[key];
-            }
-          });
-        }
-      });    
-    }
+      }); 
+      if(this.dataTarea.image){
+        this.imageExists = true;
+      }
+  }
 
+  getInfoBDTutor(){
+    this.dataTarea = {}
+    const db = getDatabase();
+    const dbRef = ref(db, `users/`);
+    onValue(dbRef, (snapshot) => {
+      if(this.allInfoBD){
+        this.allInfoBD = {}
+      }
+      this.allInfoMaestros = [];
+      this.allInfoTareas = [];
+      this.tareasTutorActivas = [];
+      this.allInfoBD = snapshot.val();
+      if(this.allInfoBD){
+        Object.keys(this.allInfoBD).forEach(key => {
+          if(this.allInfoBD[key].rol === 'maestro'){
+            if(!this.allInfoMaestros[key]){
+              this.allInfoMaestros[key] = this.allInfoBD[key];
+            }
+          }
+        });
+      }
+      if(this.allInfoMaestros){
+        Object.keys(this.allInfoMaestros).forEach(key => {
+          if(this.allInfoMaestros[key].tareas){
+            if(!this.allInfoTareas[key]){
+              this.allInfoTareas = this.allInfoMaestros[key].tareas;
+            }
+          }
+        });
+      }
+      if(this.allInfoTareas){
+        Object.keys(this.allInfoTareas).forEach(key => {
+          if(this.allInfoTareas[key].id === this.info.params.id){
+            this.dataTarea = this.allInfoTareas[key];
+          }
+        });
+      }
+      if(this.dataTarea.image){
+        this.imageExists = true;
+      }
+    });    
   }
 
   getRole(){
@@ -171,9 +210,12 @@ export class DataTareaPage implements OnInit {
         this.role = this.infoUser.rol;
         if(this.role === 'tutor'){
           this.tutorView = true;
+          this.getInfoBDTutor()
+
         }
         else{
           this.maestroView = true;
+          this.getInfoBDMaestro()
         }
       } else {
         console.log("No data available");

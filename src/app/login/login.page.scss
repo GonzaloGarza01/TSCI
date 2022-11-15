@@ -14,31 +14,21 @@
 .action-button {
     text-align: center;
     padding: 0;
+    margin-top: 50px;
     .login-button {
       text-align: center;
-      margin-top: 1rem;
       width: 100%;
       font-size: 0.9rem;
-    }
-    p {
-      margin-top: 5px;
-      font-size: 1rem;
-      padding-bottom: 10px;
     }
     .signup-button {
+        margin-top: 20px;
       --border-color: #b4b4b4;
       font-size: 0.9rem;
-      margin-top: 10px;
       width: 100%;
     }
-    .forgotPass-button {
-        font-size: 0.75rem;
-        margin-top: 10px;
-        width: parent;
-      }
 }
 .header {
-    padding-top: 5%;
+    padding-top: 20px;
     h1 {
       text-align: center;
       font-family:Lucida Bright;
@@ -48,7 +38,7 @@
 }
 .title{
     background-color: #324739;
-    margin: 5%;
+    margin: 20px;
     height: 70px;
     h1{
         padding-top: 5px;
@@ -60,7 +50,7 @@
 .square{
     background-color: white;
     border-radius: 5%;
-    margin: 5%;
+    margin: 20px;
     padding:7%
 }
 .selector{
@@ -82,4 +72,58 @@ ion-label {
 }
 ion-content{
     color: #50C878;
+}
+
+.go_login_button {
+    font-size: 14px;
+    margin-top: 20px;
+    width: parent;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+.go_login_button:after {
+    background: none repeat scroll 0 0 transparent;
+    
+    content: "";
+    display: flex;
+    flex-direction: row;
+    height: 2px;
+    left: 50%;
+    background: rgb(80, 200, 120);
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
+
+  .go_login_button:hover:after {
+    width: 100%;
+    left: 0;
+  }
+
+.hide {
+    height: 100%;
+    width: 60%;
+    position: absolute;
+    background-image: url(https://fondosmil.com/fondo/75013.jpg);
+    background-size: cover;
+    transform: scaleX(-1);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    filter: brightness(0.5);
+  }
+
+.container {
+    margin-left: 60%;
+}
+
+@media screen and (max-width: 900px){
+    .hide {
+        display: none;
+    }
+    .container {
+        margin: 0 0 0 0;
+    }
 }

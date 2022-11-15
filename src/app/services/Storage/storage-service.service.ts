@@ -16,7 +16,6 @@ export class StorageserviceService {
   async uploadImage(name: string, id: any , imgbase: any){
     try {
       const response = await this.storageRef.child(`users/${name}/tareas/${id}`).putString(imgbase,'data_url');
-      console.log(response);
       return await response.ref.getDownloadURL();
     } catch (error) {
       console.log('Error ->' , error);

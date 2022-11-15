@@ -16,6 +16,9 @@ import { ModalGrupoTutorComponent } from '../components/modal-grupo-tutor/modal-
 export class Tab3Page implements OnInit {
   uid;
   dataUser;
+  maestroView;
+
+
   constructor(
     private authSvc:AuthService,
     private toastController: ToastController,
@@ -69,6 +72,12 @@ export class Tab3Page implements OnInit {
       //Traer el rol de la BD
       if (snapshot.exists()) {
         this.dataUser = snapshot.val();
+        if(this.dataUser.rol === 'maestro'){
+          this.maestroView = true;
+        }
+        else{
+          this.maestroView = false;
+        }
       } else {
         console.log("No data available");
       }

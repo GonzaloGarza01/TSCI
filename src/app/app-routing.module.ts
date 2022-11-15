@@ -46,11 +46,6 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin},
 
   }
-
-
-
-
-
 ];
 @NgModule({
   imports: [

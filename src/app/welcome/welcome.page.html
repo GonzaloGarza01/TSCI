@@ -3,8 +3,8 @@
     <div class="header-welcome">
       <div class="bar-navigation">
         <div class="btns">
-          <a class="go_login_btn" [routerLink]="['/login']">Iniciar sesión</a>
-          <a class="go_login_btn" [routerLink]="['/register']">Registrarse</a>
+          <a class="go_login_btn" (click)="goLogin()">Iniciar sesión</a>
+          <a class="go_login_btn" (click)="goRegister()">Registrarse</a>
         </div>
       </div>
 

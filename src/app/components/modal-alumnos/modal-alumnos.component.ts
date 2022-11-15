@@ -71,25 +71,57 @@ export class ModalAlumnosComponent implements OnInit {
   
   async onSave(){
     try {
-      if(this.alumnos.name && this.alumnos.edad && this.alumnos.number && this.alumnos.extra){
-        const db = getDatabase();
-        set(ref(db, `users/${this.uid}/grupos/${this.alumnos.grupo}/alumnos/${this.alumnos.name}`), {
-          nombre: this.alumnos.name,
-          grupo: this.alumnos.grupo,
-          edad: this.alumnos.edad,
-          contacto: this.alumnos.number,
-          comentarios: this.alumnos.extra
-        })
-        .then(()=>{
-          this.presentToast('Alumno registrado');
-          this.alumnos.name = '',
-          this.alumnos.edad = '',
-          this.alumnos.number = '',
-          this.alumnos.extra = ''
-        });
+      if(this.alumnos.name){
+        if(this.alumnos.grupo){
+          if(this.alumnos.edad){
+            if(this.alumnos.number){
+              if(this.alumnos.extra){
+                const db = getDatabase();
+                set(ref(db, `users/${this.uid}/grupos/${this.alumnos.grupo}/alumnos/${this.alumnos.name}`), {
+                  nombre: this.alumnos.name,
+                  grupo: this.alumnos.grupo,
+                  edad: this.alumnos.edad,
+                  contacto: this.alumnos.number,
+                  comentarios: this.alumnos.extra
+                })
+                .then(()=>{
+                  this.presentToast('Alumno registrado');
+                  this.alumnos.name = '',
+                  this.alumnos.edad = '',
+                  this.alumnos.number = '',
+                  this.alumnos.extra = ''
+                });
+              }
+              else{
+                const db = getDatabase();
+                set(ref(db, `users/${this.uid}/grupos/${this.alumnos.grupo}/alumnos/${this.alumnos.name}`), {
+                  nombre: this.alumnos.name,
+                  grupo: this.alumnos.grupo,
+                  edad: this.alumnos.edad,
+                  contacto: this.alumnos.number,
+                })
+                .then(()=>{
+                  this.presentToast('Alumno registrado');
+                  this.alumnos.name = '',
+                  this.alumnos.edad = '',
+                  this.alumnos.number = ''
+                });
+              }
+            }
+            else{
+              this.presentToast('Ingrese el número de contacto');
+            }
+          }
+          else{
+            this.presentToast('Ingrese al edad del alumno');
+          }
+        }
+        else{
+          this.presentToast('Ingrese el grupo al que pertenece el alumno');
+        }
       }
       else{
-        console.log("No existe informacion")
+        this.presentToast('Ingrese el nombre del alumno');
       }
     } catch (error) {
       console.log(error);
@@ -114,7 +146,7 @@ export class ModalAlumnosComponent implements OnInit {
         });
       }
       else{
-        console.log("No existe informacion")
+        this.presentToast('Ingrese el nombre del grupo');
       }
     } catch (error) {
       console.log(error);

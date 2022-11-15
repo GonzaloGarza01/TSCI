@@ -3,12 +3,28 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/asignaciones"></ion-back-button>
     </ion-buttons>
+    <!-- <ion-title *ngIf="dataTarea.nombre" >{{dataTarea.nombre}}</ion-title> -->
+
+    <div slot="end" class="popover">
+      <ion-button size="large" fill="clear" id="popover-button"><ion-icon name="ellipsis-vertical-circle-outline"></ion-icon></ion-button>
+      <ion-popover trigger="popover-button" [dismissOnSelect]="true">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item (click)="editTarea(dataTarea)" [button]="true" [detail]="false">Editar</ion-item>
+              <ion-item (click)="deleteTarea()" [button]="true" [detail]="false">Eliminar</ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+    </div>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="main">
-      <div class="header_sec">
+    <div class="header_sec">
         <ion-label style="font-size:large; font-weight:bold;" *ngIf="dataTarea.nombre" class="ion-text">{{dataTarea.nombre}}</ion-label>
         <p *ngIf="dataTarea.fecha">Fecha vencimiento {{dataTarea.fecha}}</p>
       </div>
@@ -17,17 +33,23 @@
         <ion-label *ngIf="dataTarea.grupo" class="ion-text"><p style="margin-top:20px ;">Grupo: </p>{{dataTarea.grupo}}</ion-label>
         <p style="font-weight:bold; font-size: 15px ;" *ngIf="dataTarea.image" >Imagen:</p>
       </div>
-      <div *ngIf="dataTarea.image" >
-        <img src="{{dataTarea.image}}">
+      <div *ngIf="imageExists">
+        <div class="container" >
+          <img style="margin-bottom:20px ;" src="{{dataTarea.image}}">
+        </div>
+  
+        <div class="footer2" *ngIf="maestroView">
+          <ion-button *ngIf="estado === 'activo'" color="tertiary" (click)="finalizarTarea()"> Finalizar Tarea</ion-button>
+          <ion-button *ngIf="estado === 'finalizado'" color="tertiary" (click)="activarTarea()"> Activar Tarea</ion-button>
+        </div>
       </div>
   </div>
 
-
-
   <div class="footer" *ngIf="maestroView">
+    <div *ngIf="!imageExists">
       <ion-button *ngIf="estado === 'activo'" color="tertiary" (click)="finalizarTarea()"> Finalizar Tarea</ion-button>
       <ion-button *ngIf="estado === 'finalizado'" color="tertiary" (click)="activarTarea()"> Activar Tarea</ion-button>
+    </div>
   </div>
-
 
 </ion-content>
