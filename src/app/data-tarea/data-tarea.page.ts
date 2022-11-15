@@ -60,7 +60,7 @@ export class DataTareaPage implements OnInit {
 
   async deleteTarea(){
     const alertConfirm = await this.atrCtrl.create({
-      message: '¿Desea eliminar esta tarea?',
+      message: `¿Desea eliminar la tarea ${this.dataTarea.nombre}?`,
       buttons: [
         {
           text: 'Cancelar',
@@ -78,7 +78,8 @@ export class DataTareaPage implements OnInit {
         }
       ]
     });
-    (await alertConfirm).present();    }
+    (await alertConfirm).present();    
+  }
 
   getEstado(){
     const db = getDatabase();

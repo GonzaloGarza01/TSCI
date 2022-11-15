@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { getAuth } from "firebase/auth";
 import { getDatabase, onValue, ref, remove,  } from 'firebase/database';
+import { ModalAlumnosComponent } from '../components/modal-alumnos/modal-alumnos.component';
 
 @Component({
   selector: 'app-data-alumno',
@@ -20,6 +21,7 @@ export class DataAlumnoPage implements OnInit {
     public atrCtrl: AlertController,
     private router: Router,
     private toastController: ToastController,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -72,6 +74,39 @@ export class DataAlumnoPage implements OnInit {
       duration: 1000
     });
     toast.present();
+  }
+
+  async editAlumno(alumnos){
+    const modal = await this.modalCtrl.create({
+      component: ModalAlumnosComponent,
+      componentProps: {
+        alumnos: alumnos
+      }
+    });
+    modal.present();  
+  }
+
+  async deleteAlumno(){
+    const alertConfirm = await this.atrCtrl.create({
+      message: `¿Desea eliminar el alumno ${this.dataUser.nombre}?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            const db = getDatabase();
+            remove(ref(db, `users/${this.uid}/grupos/${this.dataUser.grupo}/alumnos/${this.dataUser.nombre}`));
+            //Dirigir a tareas
+            this.router.navigate(['tabs/alumnos']);
+            this.presentToast('Alumno eliminada');
+          }
+        }
+      ]
+    });
+    (await alertConfirm).present();    
   }
 
 }

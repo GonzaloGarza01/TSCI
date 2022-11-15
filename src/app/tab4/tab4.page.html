@@ -20,7 +20,7 @@
 
   <div class="container selected-container" id="tareas-container">
     <ion-list *ngIf="!filtro">
-      <div appTap (doubleTap)="onPress($event, item.value.id)" (tap)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasActivas | keyvalue" >
+      <div appTap (doubleTap)="onPress(item.value.nombre, item.value.id)" (tap)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasActivas | keyvalue" >
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>

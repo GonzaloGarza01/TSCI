@@ -10,7 +10,7 @@
   <div class="selectBook">
     <ion-text>Seleccione el grupo al que pertenece el alumno: </ion-text>
     <ion-item>
-      <ion-select [(ngModel)]="grupo" interface="popover">
+      <ion-select placeholder="Seleccione el grupo" [(ngModel)]="grupo" interface="popover">
         <ion-select-option  *ngFor="let item of gruposNombre" value="{{item}}">{{item}}</ion-select-option>
       </ion-select> 
     </ion-item>

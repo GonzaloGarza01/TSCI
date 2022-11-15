@@ -111,10 +111,10 @@ export class Tab4Page implements OnInit {
     modal.present();
   }
 
-  async onPress(event, id){
+  async onPress(nombre, id){
     if(this.maestroView){
       const alertConfirm = await this.atrCtrl.create({
-        message: '¿Desea eliminar esta tarea?',
+        message: `¿Desea eliminar la tarea ${nombre}?`,
         buttons: [
           {
             text: 'Cancelar',

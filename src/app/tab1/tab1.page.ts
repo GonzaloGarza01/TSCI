@@ -57,7 +57,7 @@ export class Tab1Page implements OnInit {
   async onPress(grupo, nombre){
     if(this.maestroView){
       const alertConfirm = await this.atrCtrl.create({
-        message: '¿Desea eliminar este alumno?',
+        message: `¿Desea eliminar el alumno ${nombre}?`,
         buttons: [
           {
             text: 'Cancelar',

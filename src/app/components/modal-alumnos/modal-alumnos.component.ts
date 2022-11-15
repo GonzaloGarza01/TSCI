@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { getDatabase, push, ref, set, onValue } from 'firebase/database';
+import { getDatabase, push, ref, set, onValue, update } from 'firebase/database';
 import { getAuth } from "firebase/auth";
 
 @Component({
@@ -71,40 +71,41 @@ export class ModalAlumnosComponent implements OnInit {
   
   async onSave(){
     try {
-      if(this.alumnos.name){
+      if(this.alumnos.nombre){
         if(this.alumnos.grupo){
           if(this.alumnos.edad){
-            if(this.alumnos.number){
-              if(this.alumnos.extra){
+            if(this.alumnos.contacto){
+              if(this.alumnos.comentarios){
                 const db = getDatabase();
-                set(ref(db, `users/${this.uid}/grupos/${this.alumnos.grupo}/alumnos/${this.alumnos.name}`), {
-                  nombre: this.alumnos.name,
+                set(ref(db, `users/${this.uid}/grupos/${this.alumnos.grupo}/alumnos/${this.alumnos.nombre}`), {
+                  nombre: this.alumnos.nombre,
                   grupo: this.alumnos.grupo,
                   edad: this.alumnos.edad,
-                  contacto: this.alumnos.number,
-                  comentarios: this.alumnos.extra
+                  contacto: this.alumnos.contacto,
+                  comentarios: this.alumnos.comentarios
                 })
                 .then(()=>{
-                  this.presentToast('Alumno registrado');
-                  this.alumnos.name = '',
+                  this.presentToast('Datos agregados');
+                  this.alumnos.nombre = '',
+                  this.alumnos.grupo = '',
                   this.alumnos.edad = '',
-                  this.alumnos.number = '',
-                  this.alumnos.extra = ''
+                  this.alumnos.comentarios = '',
+                  this.alumnos.contacto = ''
                 });
               }
               else{
                 const db = getDatabase();
-                set(ref(db, `users/${this.uid}/grupos/${this.alumnos.grupo}/alumnos/${this.alumnos.name}`), {
-                  nombre: this.alumnos.name,
+                set(ref(db, `users/${this.uid}/grupos/${this.alumnos.grupo}/alumnos/${this.alumnos.nombre}`), {
+                  nombre: this.alumnos.nombre,
                   grupo: this.alumnos.grupo,
                   edad: this.alumnos.edad,
-                  contacto: this.alumnos.number,
+                  contacto: this.alumnos.contacto,
                 })
                 .then(()=>{
-                  this.presentToast('Alumno registrado');
-                  this.alumnos.name = '',
+                  this.presentToast('Datos agregados');
+                  this.alumnos.nombre = '',
                   this.alumnos.edad = '',
-                  this.alumnos.number = ''
+                  this.alumnos.contacto = ''
                 });
               }
             }
