@@ -13,9 +13,10 @@
 
         <!-- Nombre -->
         <div class="select">
-          <ion-text>Nombre de la tarea</ion-text>
+          <ion-text>Nombre de la tarea:</ion-text>
           <ion-item>
             <ion-input type="text"
+            placeholder="Ingrese el nombre de la tarea"
             [(ngModel)]="tareas.nombre"
             required class="register_input"
           ></ion-input>
@@ -24,9 +25,9 @@
 
         <!-- Grupo -->
         <div class="select">
-          <ion-text>Grupo</ion-text>
+          <ion-text>Grupo:</ion-text>
           <ion-item>
-            <ion-select [(ngModel)]="tareas.grupo" interface="popover">
+            <ion-select [(ngModel)]="tareas.grupo" interface="popover" placeholder="Seleccione el grupo">
               <ion-select-option  *ngFor="let item of gruposNombre" value="{{item}}">{{item}}</ion-select-option>
             </ion-select> 
           </ion-item>
@@ -34,9 +35,10 @@
 
         <!-- Descripción -->
         <div class="select">
-          <ion-text>Descripción</ion-text>
+          <ion-text>Descripción:</ion-text>
           <ion-item>
             <ion-input type="text"
+            placeholder="Ingrese la descripción de la tarea"
             [(ngModel)]="tareas.descripcion"
             required class="register_input"
           ></ion-input>
@@ -45,7 +47,7 @@
 
         <!-- Fecha -->
         <div class="select">
-          <ion-text>Fecha</ion-text>
+          <ion-text>Fecha:</ion-text>
           <ion-item>
             <ion-input type="date"
             [(ngModel)]="tareas.fecha"
@@ -60,10 +62,11 @@
           <input [(ngModel)]="tareas.image" style="padding-top:20px ;" type="file" accept=".jpg, .png" (change)="saveImage($event)"  id="inputFile"/>
         </div>        
 
-        <div class="btn">
-          <a (click)="dismissModal()">Cancelar</a>
-          <ion-button type="submit" (click)="onSave()" >Confirmar</ion-button>
-        </div>
+      </div>
+      
+      <div class="btn">
+        <a (click)="dismissModal()">Cancelar</a>
+        <ion-button type="submit" (click)="onSave()" >Confirmar</ion-button>
       </div>
     </div>
 

@@ -37,6 +37,7 @@
           <ion-text>Nombre del alumno</ion-text>
           <ion-item>
             <ion-input type="text"
+            placeholder="Ingrese el nombre"
             [(ngModel)]="alumnos.name"
             required class="register_input"
           ></ion-input>
@@ -45,8 +46,8 @@
         <div class="select">
           <ion-text>Grupo</ion-text>
           <ion-item>
-            <ion-select [(ngModel)]="alumnos.grupo" interface="popover">
-              <ion-select-option  *ngFor="let item of gruposNombre" value="{{item}}">{{item}}</ion-select-option>
+            <ion-select [(ngModel)]="alumnos.grupo" placeholder="Seleccione el grupo" interface="popover">
+              <ion-select-option *ngFor="let item of gruposNombre" value="{{item}}">{{item}}</ion-select-option>
             </ion-select> 
           </ion-item>
         </div>
@@ -54,6 +55,7 @@
           <ion-text>Edad del alumno</ion-text>
           <ion-item>
             <ion-input type="number"
+            placeholder="000"
             [(ngModel)]="alumnos.edad"
             required class="register_input"
           ></ion-input>
@@ -63,6 +65,7 @@
           <ion-text>Contacto del tutor</ion-text>
           <ion-item>
             <ion-input type="tel"
+            placeholder="888-888-8888"
             [(ngModel)]="alumnos.number"
             required class="register_input"
           ></ion-input>
