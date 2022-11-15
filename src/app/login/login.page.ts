@@ -35,6 +35,10 @@ export class LoginPage implements OnInit {
   //   }
   // }
 
+  goToWelcome(){
+    this.router.navigate(['welcome']);
+  }
+
   async onLogin(){
     try {
       const user = await this.authSvc.login(this.user.email, this.user.password);

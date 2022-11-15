@@ -1,13 +1,15 @@
 <ion-content color="primary">
 
   <!--ENCABEZADO-->
-  <div class="header">
-    <h1>Crear cuenta</h1>
+  <div class="hide">
   </div>
 
-  <div class="square">
-    <div class="login-section">
-
+  <div class="container">
+    <div class="header">
+      <h1>Crear cuenta</h1>
+    </div>
+    <div class="square">
+      <div class="login-section">
         <div class="login-form">
           <div class="form-input">
             <ion-item>
@@ -27,39 +29,39 @@
             </ion-item>
           </div>
 
-        <div class="form-input">
-          <ion-item>
-            <ion-label position="floating" color="medium"><ion-icon name="lock-closed-outline"></ion-icon>Contraseña</ion-label>
-            <ion-input
-            #password [(ngModel)]="user.pass"
-            required class="register_input"
-            type="password"
-            minlength="6"
-            placeholder="Min. 6 caracteres">
-          </ion-input>          </ion-item>
+          <div class="form-input">
+            <ion-item>
+              <ion-label position="floating" color="medium"><ion-icon name="lock-closed-outline"></ion-icon>Contraseña</ion-label>
+              <ion-input
+              #password [(ngModel)]="user.pass"
+              required class="register_input"
+              type="password"
+              minlength="6"
+              placeholder="Min. 6 caracteres">
+            </ion-input>          </ion-item>
+          </div>
+          <div class="form-input">
+            <ion-item>
+              <ion-label position="floating" color="medium"><ion-icon name="lock-closed-outline"></ion-icon>Confirmar contraseña</ion-label>
+              <ion-input
+              type = 'password'
+              #confPassword [(ngModel)]="user.confpass"
+              required class="register_input"
+              minlength="6"
+              placeholder="Min. 6 caracteres"
+            ></ion-input>          </ion-item>
+          </div>
         </div>
-        <div class="form-input">
-          <ion-item>
-            <ion-label position="floating" color="medium"><ion-icon name="lock-closed-outline"></ion-icon>Confirmar contraseña</ion-label>
-            <ion-input
-            type = 'password'
-            #confPassword [(ngModel)]="user.confpass"
-            required class="register_input"
-            minlength="6"
-            placeholder="Min. 6 caracteres"
-          ></ion-input>          </ion-item>
+        <div class="action-button">
+          <ion-button  type="submit" size="large" class="login-button" color="secondary" (click)="onRegister()" expand="block">Confirmar</ion-button>
         </div>
-      </div>
   
-      <div class="action-button">
-        <ion-button  type="submit" size="large" class="login-button" color="secondary" (click)="onRegister()" expand="block">Confirmar</ion-button>
+        <ion-footer class="footer_register">
+          <b>¿Ya tienes una cuenta?</b>
+          <a class="go_login_button" (click)="goLogin()" > Iniciar Sesión </a>
+        </ion-footer>
       </div>
-
-      <ion-footer class="footer_register">
-        <b>¿Ya tienes una cuenta?</b>
-        <a class="go_login_button" [routerLink]="['/login']"> Iniciar Sesión </a>
-      </ion-footer>
     </div>
-
   </div>
+  
 </ion-content>

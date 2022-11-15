@@ -23,6 +23,10 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
+  goLogin(){
+    this.router.navigate(['login']);
+  }
+
 
   async onRegister(){
     if (this.user.confpass === this.user.pass){
