@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title *ngIf="dataTarea.nombre" >{{dataTarea.nombre}}</ion-title>
 
-    <div slot="end" class="popover">
+    <div *ngIf="maestroView" slot="end" class="popover">
       <ion-button size="large" fill="clear" id="popover-button"><ion-icon name="ellipsis-vertical-circle-outline"></ion-icon></ion-button>
       <ion-popover trigger="popover-button" [dismissOnSelect]="true">
         <ng-template>

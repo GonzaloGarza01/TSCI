@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Recupera tu cuenta</ion-title>
+    <ion-buttons slot="end">
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="form-content">
+    <p>Ingresa tu correo electronico para recuperar tu contraseña</p>
+
+    <div class="form-input">
+
+      <ion-item>
+        <ion-label position="floating" color="medium"><ion-icon name="mail-outline"></ion-icon>Email</ion-label>
+        <ion-input type="text" #email required class="register_input"> </ion-input>
+      </ion-item>
+    </div>
+
+    <div class="action-button">
+      <ion-button class="signup-button" size="large" fill="outline" (click)="dismissModal()" >Cancelar</ion-button>
+      <ion-button type="submit" size="large" class="login-button" (click)="forgotPass(email)" color="primary">Aceptar</ion-button>
+
+    </div>
+  </div>
+</ion-content>
