@@ -78,7 +78,7 @@
     </ion-list>
 
     <ion-list style="padding-top:20px ;" *ngIf="tutorView">
-      <div style="padding-top:20px ;" (tap)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasTutorVencidas | keyvalue" >
+      <div style="padding-top:20px ;" (click)="goToInfo(item.value.grupo, item.value.id)" class="aviso_item" lines="full" *ngFor="let item of tareasTutorVencidas | keyvalue" >
         <ion-label>
           {{item.value.nombre}}
           <p>{{item.value.grupo}}</p>

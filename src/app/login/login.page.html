@@ -33,7 +33,7 @@
         <!-- BOTONES -->
         <div class="action-button ion-padding">
           <ion-button type="submit" size="large" class="login-button" (click)="onLogin()" color="primary">Iniciar sesion</ion-button>
-          <a class="go_login_button">¿Olvidaste tu contraseña?</a>
+          <a class="go_login_button" (click)="goModal()" >¿Olvidaste tu contraseña?</a>
           <ion-button  [routerLink]="['/register']" class="signup-button" size="large" color="tertiary">Registrarse</ion-button>
           <a class="go_login_button" (click)="goToWelcome()" >¿Qué es Aprende+?</a>
         </div>
