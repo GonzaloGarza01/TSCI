@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { ModalRecoverComponent } from '../components/modal-recover/modal-recover.component';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class LoginPage implements OnInit {
     private authSvc:AuthService,
     private router: Router,
     private toastController: ToastController,
+    private modalController: ModalController,
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,14 @@ export class LoginPage implements OnInit {
   //     this.maestroView = true;
   //   }
   // }
+
+  async goModal(){
+    const modal = await this.modalController.create({
+      component: ModalRecoverComponent
+    });
+    return await modal.present();
+  }
+
 
   goToWelcome(){
     this.router.navigate(['welcome']);
